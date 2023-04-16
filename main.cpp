@@ -15,6 +15,8 @@ bool stopEverything = false;
 unsigned int Tries, Goals;
 vector<float> currentTextColor = {1, 1, 1, 1};
 
+bool isDay;
+
 void showScore();
 
 void updatePos(PhysicalState &p, double t) {
@@ -163,19 +165,26 @@ void draw() {
         glutWarpPointer(WIDTH / 2, HEIGHT);
         firstTime = false;
     }
-    GLfloat lightColor0[] = {1.0f, 1.0f, 1.0f, 0.7f}; //Color (0.5, 0.5, 0.5)
-    GLfloat lightPos0[] = {0.0f, -100.0f, 100.0f, 1.0f}; //Positioned at (4, 0, 8)
-    glLightfv(GL_LIGHT0, GL_DIFFUSE, lightColor0);
-    glLightfv(GL_LIGHT0, GL_POSITION, lightPos0);
-    GLfloat lightColor1[] = {0.3f, 0.3f, 0.1f, 1.0f}; //Color (0.5, 0.5, 0.5)
-    GLfloat lightPos1[] = {-1.0f, -1.0f, -1.0f, 1.0f}; //Positioned at (4, 0, 8)
-    glLightfv(GL_LIGHT1, GL_AMBIENT, lightColor1);
+    // GLfloat lightColor0[] = {1.0f, 1.0f, 1.0f, 0.7f}; //Color (0.5, 0.5, 0.5)
+    // GLfloat lightPos0[] = {0.0f, -100.0f, 100.0f, 1.0f}; //Positioned at (4, 0, 8)
+    // glLightfv(GL_LIGHT0, GL_DIFFUSE, lightColor0);
+    // glLightfv(GL_LIGHT0, GL_POSITION, lightPos0);
+    // GLfloat lightColor1[] = {0.3f, 0.3f, 0.1f, 1.0f}; //Color (0.5, 0.5, 0.5)
+    // GLfloat lightPos1[] = {-1.0f, -1.0f, -1.0f, 1.0f}; //Positioned at (4, 0, 8)
+    // glLightfv(GL_LIGHT1, GL_AMBIENT, lightColor1);
 
 
-    GLfloat lightColor2[] = {0.2f, 0.2f, 0.2f, 1.0f}; //Color (0.5, 0.5, 0.5)
-    GLfloat lightPos2[] = {0.0f, 100.0f, 0.10f, 1.0f}; //Positioned at (4, 0, 8)
-    glLightfv(GL_LIGHT2, GL_DIFFUSE, lightColor2);
-    glLightfv(GL_LIGHT2, GL_POSITION, lightPos2);
+    // GLfloat lightColor2[] = {0.2f, 0.2f, 0.2f, 1.0f}; //Color (0.5, 0.5, 0.5)
+    // GLfloat lightPos2[] = {0.0f, 100.0f, 0.10f, 1.0f}; //Positioned at (4, 0, 8)
+    // glLightfv(GL_LIGHT2, GL_DIFFUSE, lightColor2);
+    // glLightfv(GL_LIGHT2, GL_POSITION, lightPos2);
+
+    if(isDay) // if it is day then set background color to blue
+        glClearColor(137 / 255.0, 206 / 255.0, 255 / 255.0, 0);
+    else // if it is night then set background color to black 
+    // (sorta black, it's not completely pitch black, just a very dark shade of grey actually)
+    // (cuz we never get pitch black skies anyways. (sigh) Pollution ;-;) 
+        glClearColor(13 / 255.0, 13 / 255.0, 13 / 255.0, 0);
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glMatrixMode(GL_MODELVIEW); //Switch to the drawing perspective
@@ -194,7 +203,7 @@ void draw() {
 //    glEnd();
 
 
-
+    // draw the ball
     glPushMatrix();
     glColor3f(1.0, 1.0, 0.0);
     glTranslatef(sphere.positionCurrent.x, sphere.positionCurrent.y, sphere.positionCurrent.z);
@@ -222,8 +231,8 @@ void draw() {
     //Draw all transparent textured objects here:
 
 
-    ground.draw();
-    defender.draw();
+    ground.draw(isDay);
+    defender.draw(isDay);
     showScore();
 
     showMsg();
@@ -353,6 +362,9 @@ void handleKeypress(unsigned char key, //The key that was pressed
                 currentMode = ADJUSTING;
         }
     }
+    if(key == 'n') {
+        isDay = !isDay;
+    }
 
 }
 
@@ -480,7 +492,8 @@ void handlePassiveMouse(int x, int y) {
 }
 
 void myInit(void) {
-    glClearColor(137 / 255.0, 206 / 255.0, 255 / 255.0, 0);
+    // glClearColor(137 / 255.0, 206 / 255.0, 255 / 255.0, 0);
+    glClearColor(13 / 255.0, 13 / 255.0, 13 / 255.0, 0);
 //    glOrtho(0, WIDTH, 0, HEIGHT, 0, 500);
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_COLOR_MATERIAL);
@@ -488,6 +501,7 @@ void myInit(void) {
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glEnable(GL_TEXTURE_2D);
     glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+    isDay = true;
     glEnable(GL_LIGHTING); //Enable lighting
 
     glEnable(GL_LIGHT0); //Enable light #0

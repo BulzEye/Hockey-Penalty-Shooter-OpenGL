@@ -8,9 +8,9 @@
 #include "functionalities.h"
 
 
-void FlatSurface::draw() {
+void FlatSurface::draw(bool isDay) {
 
-    start2DTexture(groundTexture);
+    start2DTexture(groundTexture, isDay);
 
     glBegin(GL_QUADS);
     glTexCoord2f(0.0, 0.0);
@@ -23,9 +23,9 @@ void FlatSurface::draw() {
     glVertex3f(corners[3].x, corners[3].y, corners[3].z);
     glEnd();
 
-    end2DTexture();
+    end2DTexture(isDay);
 
-    start2DTexture(ads);
+    start2DTexture(ads, isDay);
     for (int i = 0; i < 4; ++i) {
 
         glBegin(GL_QUADS);
@@ -41,7 +41,7 @@ void FlatSurface::draw() {
     }
 
 
-    end2DTexture();
+    end2DTexture(isDay);
 
 }
 
@@ -257,8 +257,8 @@ void Defender::acceleration() {
     }
 }
 
-void Defender::draw() {
-    start2DTexture(defenderTexture);
+void Defender::draw(bool isDay) {
+    start2DTexture(defenderTexture, isDay);
 //    glPushMatrix();
 //    glPushAttrib(GL_CURRENT_BIT);
 //
@@ -287,7 +287,7 @@ void Defender::draw() {
 
     end2DTexture();
 
-    start2DTexture(leftArm);
+    start2DTexture(leftArm, isDay);
 
     float displacex = -0.3;
     float displacey = 0.63;
@@ -306,9 +306,9 @@ void Defender::draw() {
     glVertex3f(-this->width / 2, 0, this->height*0.60 / 2);
     glEnd();
 
-    end2DTexture();
+    end2DTexture(isDay);
 
-    start2DTexture(leftArm);
+    start2DTexture(leftArm, isDay);
 
     glTranslatef(defender.state.positionCurrent.x, GOAL_POST_Y, (this->height) / 2 - BALL_RADIUS);
     glScalef(-1,1,1);
@@ -326,7 +326,7 @@ void Defender::draw() {
     glVertex3f(-this->width / 2, 0, this->height*0.60 / 2);
     glEnd();
 
-    end2DTexture();
+    end2DTexture(isDay);
 
 //    glPopAttrib();
 //    glPopMatrix();

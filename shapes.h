@@ -35,7 +35,7 @@ public:
 class FlatSurface: public RealObject{
 public:
     axes corners[4];
-    void draw();
+    void draw(bool isDay=true);
 };
 
 class PoleSurface: public RealObject{
@@ -69,7 +69,7 @@ public:
 
     PhysicalState state;
     void acceleration();
-    void draw();
+    void draw(bool isDay=true);
 };
 
 extern FlatArrow aimArrow;
