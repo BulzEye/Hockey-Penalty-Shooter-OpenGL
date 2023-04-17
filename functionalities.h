@@ -119,6 +119,8 @@ float writeText(string text, int texture, alignment align = LEFT);
 float writeMultiLineText(string text, int texture, alignment align = LEFT);
 void drawChalkLines();
 
+extern axes cameraPos;
+
 void showMsg();
 void rotateMsg(int _);
 

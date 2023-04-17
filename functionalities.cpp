@@ -688,7 +688,8 @@ void showMsg() {
     glTranslatef(distance * (cos(DEG2GRAD(sphereCamera.zAngle)) * cos(DEG2GRAD(sphereCamera.xAngle))),
                  distance * (cos(DEG2GRAD(sphereCamera.zAngle)) * sin(DEG2GRAD(sphereCamera.xAngle))),
                  distance * sin(DEG2GRAD(sphereCamera.zAngle)));
-    glTranslatef(toLookAt.x, toLookAt.y, toLookAt.z);
+    // glTranslatef(toLookAt.x, toLookAt.y, toLookAt.z);
+    glTranslatef(cameraPos.x, cameraPos.y, cameraPos.z);
     glRotatef(90 + sphereCamera.xAngle + textRotX, 0, 0, 1);
     glRotatef(-sphereCamera.zAngle, 1, 0, 0);
     glScalef(0.75, 0.75, 0.75);
