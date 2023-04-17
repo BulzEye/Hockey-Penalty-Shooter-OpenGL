@@ -362,6 +362,30 @@ void handleKeypress(unsigned char key, //The key that was pressed
                 sphereCamera.distance -= (sphereCamera.distance > MAX_SPHERE_CAMERA_DISTANCE ? 0.1f : 0);
 //            cout<<sphereCamera.distance<<endl;
                 break;
+
+            case 'i':
+                if(cameraPos[1] < ground.corners[2][1]) {
+                    cameraPos[1] += 0.2;
+                }
+                break;
+            
+            case 'k':
+                if(cameraPos[1] > ground.corners[0][1]) {
+                    cameraPos[1] -= 0.2;
+                }
+                break;
+            
+            case 'j':
+                if(cameraPos[0] > ground.corners[0][0]) {
+                    cameraPos[0] -= 0.2;
+                }
+                break;
+            
+            case 'l':
+                if(cameraPos[0] < ground.corners[2][0]) {
+                    cameraPos[0] += 0.2;
+                }
+                break;
         }
     } else {
         if (key == 27) {
@@ -530,6 +554,25 @@ void handlePassiveMouse(int x, int y) {
         sphereCamera.zAngle = 45 + -1 * (y) * 30 / HEIGHT;
     }
 }
+
+// void handleMouse(int button, int state, int x, int y) {
+//     if(state == GLUT_UP) {
+//         switch(button) {
+//             case 3: // scroll up
+//                 sphereCamera.distance -= 0.1f;
+//                 sphereCamera.distance += (sphereCamera.distance < MIN_SPHERE_CAMERA_DISTANCE ? 0.1f : 0);
+// //            cout<<sphereCamera.distance<<endl;
+
+//                 break;
+
+//             case 4: // scroll down
+//                 sphereCamera.distance += 0.1f;
+//                 sphereCamera.distance -= (sphereCamera.distance > MAX_SPHERE_CAMERA_DISTANCE ? 0.1f : 0);
+// //            cout<<sphereCamera.distance<<endl;
+//                 break;
+//         }
+//     }
+// }
 
 void myInit(void) {
     // glClearColor(137 / 255.0, 206 / 255.0, 255 / 255.0, 0);
