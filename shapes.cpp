@@ -51,6 +51,7 @@ void PoleSurface::draw() {
     glPushAttrib(GL_CURRENT_BIT);
     GLUquadric *quadric = gluNewQuadric();
 
+    // FIXMEDONE: find a fix for poles glowing white in night mode - DONE in main.cpp
 
     if (Type == U_POLE) {
 //        glColor3f(0.0, 0.0, 0.0);

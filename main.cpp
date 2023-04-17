@@ -157,27 +157,53 @@ void updatePosCallBack(int _) {
     }
 }
 
+axes cameraPos;
+
 
 void draw() {
     glLoadIdentity(); //Reset the drawing perspective
-    cameraPosition(toLookAt, sphereCamera.distance, sphereCamera.zAngle, sphereCamera.xAngle);
+    cameraPosition(cameraPos, sphereCamera.distance, sphereCamera.zAngle, sphereCamera.xAngle);
     if (firstTime) {
         glutWarpPointer(WIDTH / 2, HEIGHT);
         firstTime = false;
     }
-    // GLfloat lightColor0[] = {1.0f, 1.0f, 1.0f, 0.7f}; //Color (0.5, 0.5, 0.5)
-    // GLfloat lightPos0[] = {0.0f, -100.0f, 100.0f, 1.0f}; //Positioned at (4, 0, 8)
-    // glLightfv(GL_LIGHT0, GL_DIFFUSE, lightColor0);
-    // glLightfv(GL_LIGHT0, GL_POSITION, lightPos0);
-    // GLfloat lightColor1[] = {0.3f, 0.3f, 0.1f, 1.0f}; //Color (0.5, 0.5, 0.5)
-    // GLfloat lightPos1[] = {-1.0f, -1.0f, -1.0f, 1.0f}; //Positioned at (4, 0, 8)
-    // glLightfv(GL_LIGHT1, GL_AMBIENT, lightColor1);
 
+    // LIGHT0: located behind camera, directed slantly towards the ball
+    //         parallel ray light source
 
-    // GLfloat lightColor2[] = {0.2f, 0.2f, 0.2f, 1.0f}; //Color (0.5, 0.5, 0.5)
-    // GLfloat lightPos2[] = {0.0f, 100.0f, 0.10f, 1.0f}; //Positioned at (4, 0, 8)
-    // glLightfv(GL_LIGHT2, GL_DIFFUSE, lightColor2);
-    // glLightfv(GL_LIGHT2, GL_POSITION, lightPos2);
+    GLfloat lightColor0[] = {1.0f, 1.0f, 1.0f, 0.7f}; //Color (0.5, 0.5, 0.5)
+    GLfloat lightPos0[] = {0.0f, -100.0f, 100.0f, 1.0f}; //Positioned at (4, 0, 8)
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, lightColor0);
+    glLightfv(GL_LIGHT0, GL_POSITION, lightPos0);
+
+    // LIGHT1: adds a yellowish tinge to the background
+    //         ambient light source
+
+    GLfloat lightColor1[] = {0.3f, 0.3f, 0.1f, 1.0f}; //Color (0.5, 0.5, 0.5)
+    GLfloat lightPos1[] = {-1.0f, -1.0f, -1.0f, 1.0f}; //Positioned at (4, 0, 8)
+    glLightfv(GL_LIGHT1, GL_AMBIENT, lightColor1);
+
+    // LIGHT2: positioned behind goalpost in the direction of ball
+    //         parallel ray light source
+
+    GLfloat lightColor2[] = {0.2f, 0.2f, 0.2f, 1.0f}; //Color (0.5, 0.5, 0.5)
+    GLfloat lightPos2[] = {0.0f, 100.0f, 0.10f, 1.0f}; //Positioned at (4, 0, 8)
+    glLightfv(GL_LIGHT2, GL_DIFFUSE, lightColor2);
+    glLightfv(GL_LIGHT2, GL_POSITION, lightPos2);
+
+    // LIGHT3: intended to be spotlight (in night mode) from left front corner
+    //         parallel ray light source
+
+    // cout << ground.corners[0][0] << endl;
+    GLfloat spotlightl_pos[] = {(float)ground.corners[1][0], (float)ground.corners[1][1], (float)ground.corners[1][2]+30, 1.0f};
+    GLfloat spotlightl_color[] = {1.0f, 1.0f, 1.0f, 0.7f}; //Color (0.5, 0.5, 0.5)
+    glLightfv(GL_LIGHT3, GL_POSITION, spotlightl_pos);
+    glLightfv(GL_LIGHT3, GL_DIFFUSE, spotlightl_color);
+
+    GLfloat spotlightr_pos[] = {(float)ground.corners[2][0], (float)ground.corners[2][1], (float)ground.corners[2][2]+30, 1.0f};
+    GLfloat spotlightr_color[] = {1.0f, 1.0f, 1.0f, 0.7f}; //Color (0.5, 0.5, 0.5)
+    glLightfv(GL_LIGHT4, GL_POSITION, spotlightr_pos);
+    glLightfv(GL_LIGHT4, GL_DIFFUSE, spotlightr_color);
 
     if(isDay) // if it is day then set background color to blue
         glClearColor(137 / 255.0, 206 / 255.0, 255 / 255.0, 0);
@@ -364,6 +390,20 @@ void handleKeypress(unsigned char key, //The key that was pressed
     }
     if(key == 'n') {
         isDay = !isDay;
+        if(isDay) {
+            glEnable(GL_LIGHT0); //Enable light #0
+            glEnable(GL_LIGHT1); //Enable light #1
+            glEnable(GL_LIGHT2); //Enable light #2
+            glDisable(GL_LIGHT3); //Disable light #3
+            glDisable(GL_LIGHT4); //Disable light #4
+        }
+        else {
+            glDisable(GL_LIGHT0); //Disable light #0
+            glDisable(GL_LIGHT1); //Disable light #1
+            glDisable(GL_LIGHT2); //Disable light #2
+            glEnable(GL_LIGHT3); //Enable light #3
+            glEnable(GL_LIGHT4); //Enable light #4
+        }
     }
 
 }
@@ -504,9 +544,14 @@ void myInit(void) {
     isDay = true;
     glEnable(GL_LIGHTING); //Enable lighting
 
+
+    cameraPos[0] = cameraPos[1] = cameraPos[2] = 0.0;
+
     glEnable(GL_LIGHT0); //Enable light #0
     glEnable(GL_LIGHT1); //Enable light #1
     glEnable(GL_LIGHT2); //Enable light #2
+    glDisable(GL_LIGHT3); //Enable light #3
+    glDisable(GL_LIGHT4); //Enable light #4
     glEnable(GL_NORMALIZE); //Automatically normalize normals
     glShadeModel(GL_SMOOTH);
     backgroundMusicPlayer(0);

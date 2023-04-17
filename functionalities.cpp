@@ -18,6 +18,8 @@ int mouseX, mouseY;
 bool firstTime = true;
 PhysicalState sphere, *determineSphere = NULL;
 
+extern bool isDay;
+
 void handleResize(int w, int h) {
     glViewport(0, 0, w, h);
 
