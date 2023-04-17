@@ -71,6 +71,10 @@ void draw(void) {
     glFlush();
 }
 
+void menuFunc(int value) {
+    cout << value << endl;
+}
+
 int main(int argc, char** argv) {
     coords.push_back({400, 400});
     coords.push_back({400, 600});
@@ -97,6 +101,12 @@ int main(int argc, char** argv) {
     glutKeyboardFunc(handleKey);
     glutMouseFunc(handleMouse);
     glutMotionFunc(handleDrag);
+
+    int menuID = glutCreateMenu(menuFunc);
+    glutAddMenuEntry("Menu Item 1", 1);
+    glutAddMenuEntry("Menu Item 2", 2);
+
+    glutAttachMenu(GLUT_RIGHT_BUTTON);
 
     glutMainLoop();
 
