@@ -980,6 +980,29 @@ void draw() {
 //    glEnd();
 
 
+// drawing stadium
+
+  	draw_disk();
+  	draw_cylinder();
+  	draw_signs();
+    updatescreen();
+  	glFlush();
+  	// glutSwapBuffers();
+
+
+
+//hockey stick drawing
+    glPushMatrix();
+    // int x1 = sphere.positionCurrent.x, y1 = sphere.positionCurrent.y - 0.2, z1 = sphere.positionCurrent.z + 0.2;
+    glColor3f(1.0, 0.0, 1.0);
+    // glTranslatef(x1, y1, z1);
+    glTranslatef(0, 0 - 0.2, 0 + 0.2);
+    glRotatef(15.0f, 0.0f, 1.0f, 0.0f);
+    drawHockeyStick(70.0, 100.0, 50);
+    glPopMatrix();
+
+	
+	
     // draw the ball
     glPushMatrix();
     glColor3f(1.0, 1.0, 0.0);
