@@ -406,8 +406,8 @@ void draw_disk()//creates seating for stadium as well as field
 	myDisk = gluNewQuadric();
 	gluQuadricDrawStyle(myDisk, GLU_FILL);
 	glPushMatrix();
-	glTranslatef(0.0f,3.0f,0.0f);
-	glTranslatef(0.0f,0.0f,0.0f);
+	// glTranslatef(0.0f,3.0f,0.0f);
+	// glTranslatef(0.0f,0.0f,0.0f);
 	// glTranslatef(0.0f,5.0f,0.0f);
 	glRotatef(180.0f, 1.0f, 0.0f, 0.0f);
 	glRotatef(45.0f, 0.0f, 0.0f, 1.0f);
@@ -438,12 +438,12 @@ void draw_disk()//creates seating for stadium as well as field
 	glColor3f(0.6f, 0.6f, 0.6f);
 	glPushMatrix();
 	glTranslatef(0.0f,0.0f,-2.0f);
-	gluDisk(myDisk, 29, 30, 4, 1);
+	gluDisk(myDisk, 28.3, 30, 4, 1);
 	glPopMatrix();
 	// glColor3f(0.1f, 1.0f, 0.1f);
 	// gluDisk(myDisk, 0 ,8, 6, 1);//field
 	// glColor3f(0.2f, 0.2f, 0.2f);
-  	ground.draw();
+  	// ground.draw();
 	gluDeleteQuadric(myDisk);
 	glPopMatrix();
 
@@ -455,8 +455,8 @@ void draw_cylinder()//creates stadium
 	myCylinder = gluNewQuadric();
 	gluQuadricDrawStyle(myCylinder, GLU_FILL);
 	glPushMatrix();
-	glTranslatef(0.0f,3.0f,0.0f);
-	glTranslatef(0.0f,0.0f,0.0f);
+	// glTranslatef(0.0f,3.0f,0.0f);
+	// glTranslatef(0.0f,0.0f,0.0f);
 	// glTranslatef(0.0f,5.0f, 0.0f);
 	glRotatef(180.0f, 1.0f, 0.0f, 0.0f);
 	glRotatef(180.0f, 0.0f, 1.0f, 0.0f);
@@ -471,6 +471,8 @@ void draw_cylinder()//creates stadium
 	gluCylinder(myCylinder, 31, 31, 4, 4, 1);
 	glColor3f(0.6f, 0.6f, 0.6f);
 	gluCylinder(myCylinder, 30, 30, 3, 4, 1);
+  glColor3f(0.7f, 0.7f, 0.7f);
+  gluCylinder(myCylinder, 28.3, 28.3, 2, 4, 1);
 	gluDeleteQuadric(myCylinder);
 	glPopMatrix();
 
@@ -961,9 +963,9 @@ void draw() {
 
     if(isDay) // if it is day then set background color to blue
         glClearColor(137 / 255.0, 206 / 255.0, 255 / 255.0, 0);
-    else // if it is night then set background color to black 
+    else // if it is night then set background color to black
     // (sorta black, it's not completely pitch black, just a very dark shade of grey actually)
-    // (cuz we never get pitch black skies anyways. (sigh) Pollution ;-;) 
+    // (cuz we never get pitch black skies anyways. (sigh) Pollution ;-;)
         glClearColor(13 / 255.0, 13 / 255.0, 13 / 255.0, 0);
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -1004,8 +1006,8 @@ void draw() {
     drawHockeyStick(70.0, 100.0, 50);
     glPopMatrix();
 
-	
-	
+
+
     // draw the ball
     glPushMatrix();
     glColor3f(1.0, 1.0, 1.0);
@@ -1145,26 +1147,26 @@ void handleKeypress(unsigned char key, //The key that was pressed
                     cameraPos[1] += 0.2;
                 }
                 break;
-            
+
             case 'k':
                 if(cameraPos[1] > ground.corners[0][1]) {
                     cameraPos[1] -= 0.2;
                 }
                 break;
-            
+
             case 'j':
                 if(cameraPos[0] > ground.corners[0][0]) {
                     cameraPos[0] -= 0.2;
                 }
                 break;
-            
+
             case 'l':
                 if(cameraPos[0] < ground.corners[2][0]) {
                     cameraPos[0] += 0.2;
                 }
                 break;
 
-            // case 'z': 
+            // case 'z':
             //     gluLookAt()
         }
     } else {
