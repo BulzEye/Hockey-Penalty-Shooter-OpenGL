@@ -1004,8 +1004,8 @@ void draw() {
 
   	draw_disk();
   	draw_cylinder();
-  	draw_signs();
-    updatescreen();
+  	// draw_signs();
+    // updatescreen();
   	glFlush();
   	// glutSwapBuffers();
 
@@ -1236,7 +1236,7 @@ void handleKeypress(unsigned char key, //The key that was pressed
                 lookDist[2] += 0.2;
                 printf("%f %f %f", lookDist[0], lookDist[1], lookDist[2]);
                 break;
-            
+
             case '-':
                 lookDist[2] -= 0.2;
                 break;
