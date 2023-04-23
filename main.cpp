@@ -1454,11 +1454,11 @@ int main(int argc, char *argv[]) {
     glutPassiveMotionFunc(handlePassiveMouse);
 //    groundTexture = LoadBMP("resources/grass.bmp");
     groundTexture = convertAndLoadTexture("resources/grass.txt");
-    defenderTexture = convertAndLoadTexture("resources/defender.txt");
+    defenderTexture = convertAndLoadTexture("resources/main_body.txt");
     font = convertAndLoadTexture("resources/fonts/Ubuntu Mono Nerd Font Complete Mono.txt");
     ads = convertAndLoadTexture("resources/ads.txt");
-    leftArm = convertAndLoadTexture("resources/left_arm.txt");
-    rightArm = convertAndLoadTexture("resources/right_arm.txt");
+    leftArm = convertAndLoadTexture("resources/left_hand.txt");
+    rightArm = convertAndLoadTexture("resources/right_hand.txt");
     glutMouseFunc(handleMouse);
     glutDisplayFunc(draw);
     myInit();
