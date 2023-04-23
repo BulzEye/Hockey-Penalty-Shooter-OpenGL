@@ -116,7 +116,7 @@ enum alignment {
 extern GLuint groundTexture, defenderTexture, leftArm, rightArm, font, ads;
 extern vector<float> currentTextColor;
 float writeText(string text, int texture, alignment align = LEFT);
-float writeMultiLineText(string text, int texture, alignment align = LEFT);
+void writeMultiLineText(string text, int texture, alignment align = LEFT);
 void drawChalkLines();
 
 extern axes cameraPos;

@@ -80,7 +80,7 @@ ostream &operator<<(ostream &out, PhysicalState &p) {
     out << endl;
     out << "Time Passed : ";
     out << p.timePassed << endl;
-
+    return out;
 }
 
 
@@ -354,6 +354,8 @@ POWERING mode.
 Press ESC key to return to the previous mode or to exit the
 instructions.
 Press Q at any time to exit the game.
+
+I'm adding a new line, is it okay?
 )INSTRUCT";
 
         glPushMatrix();
@@ -489,6 +491,7 @@ int convertToTexture(const char *filename) {
     dest.write((char *) &w, sizeof(w));
     dest.write((char *) &h, sizeof(h));
     dest.close();
+    return 0;
 }
 
 GLuint loadTextureFile(const char *filename) {
@@ -582,6 +585,16 @@ void start2DTexture(GLuint texture, bool lightingDisabled) {
     glPushAttrib(GL_CURRENT_BIT);
     if (lightingDisabled)
         glDisable(GL_LIGHTING);
+    // if (lightingDisabled) {
+    //     glDisable(GL_LIGHT0);
+    //     glDisable(GL_LIGHT1);
+    //     glDisable(GL_LIGHT2);
+    //     glEnable(GL_LIGHT3);
+    //     glEnable(GL_LIGHT4);
+    //     glEnable(GL_LIGHTING);
+    // }
+
+
     glDepthMask(GL_FALSE);
     glPushMatrix();
     glEnable(GL_TEXTURE_2D);
@@ -599,6 +612,14 @@ void end2DTexture(bool lightingDisabled) {
 //    glDisable(GL_BLEND);
     if (lightingDisabled)
         glEnable(GL_LIGHTING);
+    // if (lightingDisabled) {
+    //     glEnable(GL_LIGHT0);
+    //     glEnable(GL_LIGHT1);
+    //     glEnable(GL_LIGHT2);
+    //     glDisable(GL_LIGHT3);
+    //     glDisable(GL_LIGHT4);
+    //     glEnable(GL_LIGHTING);
+    // }
 
 //    glDisable(GL_TEXTURE_GEN_S); //disable texture coordinate generation
 //    glDisable(GL_TEXTURE_GEN_T);
@@ -608,7 +629,7 @@ void end2DTexture(bool lightingDisabled) {
     glDepthMask(GL_TRUE);
 }
 
-float writeMultiLineText(string text, int texture, alignment align) {
+void writeMultiLineText(string text, int texture, alignment align) {
     std::stringstream iss(text);
 
     while (iss.good()) {

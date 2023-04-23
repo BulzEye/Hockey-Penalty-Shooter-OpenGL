@@ -12,6 +12,19 @@ void FlatSurface::draw(bool isDay) {
 
     start2DTexture(groundTexture, isDay);
 
+    // GLfloat mat_amb[] = { 0.2, 0.2, 0.2, 1.0 };
+    // GLfloat mat_dif[] = { 0.7, 0.7, 0.7, 1.0 };
+    // GLfloat mat_spc[] = { 1.0, 1.0, 1.0, 1.0 };
+    // GLfloat mat_shin[] = { 50.0 };
+    // glMaterialfv(GL_FRONT, GL_AMBIENT, mat_amb);
+    // glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_dif);
+    // glMaterialfv(GL_FRONT, GL_SPECULAR, mat_spc);
+    // glMaterialfv(GL_FRONT, GL_SHININESS, mat_shin);
+
+    // if(!isDay) {
+    //     glEnable(GL_COLOR_MATERIAL);
+    // }
+
     glBegin(GL_QUADS);
     glTexCoord2f(0.0, 0.0);
     glVertex3f(corners[0].x, corners[0].y, corners[0].z);
