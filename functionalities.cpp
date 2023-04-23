@@ -233,6 +233,9 @@ void cameraPosition(axes point, double distance, double zAngle, double xAngle) {
     gluLookAt(point.x + distance * (cos(DEG2GRAD(zAngle)) * cos(DEG2GRAD(xAngle))),
               point.y + distance * (cos(DEG2GRAD(zAngle)) * sin(DEG2GRAD(xAngle))),
               point.z + distance * sin(DEG2GRAD(zAngle)), point.x, point.y, point.z, 0, 0, 1);
+                // printf("%f %f %f, %f %f %f\n", point.x + distance * (cos(DEG2GRAD(zAngle)) * cos(DEG2GRAD(xAngle))),
+                // point.y + distance * (cos(DEG2GRAD(zAngle)) * sin(DEG2GRAD(xAngle))), 
+                // point.z + distance * sin(DEG2GRAD(zAngle)), point.x, point.y, point.z);
 
 }
 

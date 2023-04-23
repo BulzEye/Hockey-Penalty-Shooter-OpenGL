@@ -913,11 +913,20 @@ void updatescreen()//changes the sign writing
 }
 
 
+axes lookDist = {0, 0, 20};
 
 void draw() {
     glLoadIdentity(); //Reset the drawing perspective
     if(currentMode == PAUSE) {
-        gluLookAt(0, 0, 5, 0, 0, 0, 0, 0, 1);
+        // NOTE: This code currently doesn't do anything! Just saying in case someone checks this in the future.
+        // gluLookAt(lookDist[0], lookDist[1], lookDist[2], 0, 0, 0, 0, 0, 1);
+        gluLookAt(0.0, 0.0, -1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0);
+        glBegin(GL_POLYGON);
+        glVertex3f(1, 1, 0);
+        glVertex3f(1, -1, 0);
+        glVertex3f(-1, -1, 0);
+        glVertex3f(-1, 1, 0);
+        glEnd();
         // cameraPosition({0, 0, 5}, sphereCamera.distance, sphereCamera.zAngle, sphereCamera.xAngle);
     }
     else {
@@ -1130,7 +1139,6 @@ void incrementPowerMeter(int _) {
     }
 }
 
-axes lookDist = {0, 0, 1};
 
 void handleKeypress(unsigned char key, //The key that was pressed
                     int x, int y) {    //The current mouse coordinates
@@ -1220,8 +1228,17 @@ void handleKeypress(unsigned char key, //The key that was pressed
         }
     }
 
-    if(currentMode==HELP) {
-
+    if(currentMode==PAUSE) {
+        switch(key) {
+            case '+':
+                lookDist[2] += 0.2;
+                printf("%f %f %f", lookDist[0], lookDist[1], lookDist[2]);
+                break;
+            
+            case '-':
+                lookDist[2] -= 0.2;
+                break;
+        }
     }
 }
 
