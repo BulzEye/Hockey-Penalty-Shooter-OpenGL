@@ -159,6 +159,757 @@ void updatePosCallBack(int _) {
 
 axes cameraPos;
 
+void drawHockeyStick(float innerRadius, float outerRadius, int numSides) {
+    float x , y;
+    glBegin(GL_QUAD_STRIP);
+    for(int i = 0; i <= numSides; ++i) {
+        float angle = -i *  PI / numSides;
+        x = cos(angle);
+        y = sin(angle);
+
+        glNormal3f(x, y, 0);
+        glVertex3f(round(innerRadius*x)/400, round(0.0), round(innerRadius*y)/400);
+        glVertex3f(round(outerRadius*x)/400, round(0.0), round(outerRadius*y)/400);
+    }
+
+    glEnd();
+
+    glBegin(GL_QUAD_STRIP);
+    glVertex3f(-round(innerRadius*x)/400, round(0.0), round(innerRadius*y)/400);
+    glVertex3f(-round(innerRadius*x)/400, round(0.0), round(innerRadius*y + 500)/400);
+    // glEnd();
+
+    // glBegin(GL_QUAD_STRIP);
+    glVertex3f(-round(outerRadius*x)/400, round(0.0), round(outerRadius*y)/400);
+    glVertex3f(-round(outerRadius*x)/400, round(0.0), round(outerRadius*y + 500)/400);
+    glEnd();
+}
+
+//Stadium
+int south = 1,west = 2,east = 3;
+void draw_seg1() {
+	GLUquadricObj *myCylinder;
+	myCylinder = gluNewQuadric();
+	gluQuadricDrawStyle(myCylinder, GLU_FILL);
+	glColor3f(1.0f, 0.0f, 0.0f);
+	glPushMatrix();
+	glTranslatef(-3.5, 0.0f, 0.0f);
+	glRotatef(90.0f, 1.0f, 0.0f, 0.0f);
+	gluCylinder(myCylinder, 0.1, 0.1, 2.5, 16, 16);
+	glPopMatrix();
+	gluDeleteQuadric(myCylinder);
+}
+
+void draw_seg2() {
+	GLUquadricObj *myCylinder;
+	myCylinder = gluNewQuadric();
+	gluQuadricDrawStyle(myCylinder, GLU_FILL);
+	glColor3f(1.0f, 0.0f, 0.0f);
+	glPushMatrix();
+	glTranslatef(-3.5, 2.5f, 0.0f);
+	glRotatef(90.0f, 1.0f, 0.0f, 0.0f);
+	gluCylinder(myCylinder, 0.1, 0.1, 2.5, 16, 16);
+	glPopMatrix();
+	gluDeleteQuadric(myCylinder);
+}
+
+void draw_seg3() {
+	GLUquadricObj *myCylinder;
+	myCylinder = gluNewQuadric();
+	gluQuadricDrawStyle(myCylinder, GLU_FILL);
+	glColor3f(1.0f, 0.0f, 0.0f);
+	glPushMatrix();
+	glTranslatef(-3.5, 2.5f, 0.0f);
+	glRotatef(90.0f, 0.0f, 1.0f, 0.0f);
+	gluCylinder(myCylinder, 0.1, 0.1, 1.75, 16, 16);
+	glPopMatrix();
+	gluDeleteQuadric(myCylinder);
+}
+
+void draw_seg4() {
+	GLUquadricObj *myCylinder;
+	myCylinder = gluNewQuadric();
+	gluQuadricDrawStyle(myCylinder, GLU_FILL);
+	glColor3f(1.0f, 0.0f, 0.0f);
+	glPushMatrix();
+	glTranslatef(-1.75, 2.5f, 0.0f);
+	glRotatef(90.0f, 0.0f, 1.0f, 0.0f);
+	gluCylinder(myCylinder, 0.1, 0.1, 1.75, 16, 16);
+	glPopMatrix();
+	gluDeleteQuadric(myCylinder);
+}
+
+void draw_seg5() {
+	GLUquadricObj *myCylinder;
+	myCylinder = gluNewQuadric();
+	gluQuadricDrawStyle(myCylinder, GLU_FILL);
+	glColor3f(1.0f, 0.0f, 0.0f);
+	glPushMatrix();
+	glTranslatef(0.0f, 2.5f, 0.0f);
+	glRotatef(90.0f, 1.0f, 0.0f, 0.0f);
+	gluCylinder(myCylinder, 0.1, 0.1, 2.5, 16, 16);
+	glPopMatrix();
+	gluDeleteQuadric(myCylinder);
+}
+
+void draw_seg6() {
+	GLUquadricObj *myCylinder;
+	myCylinder = gluNewQuadric();
+	gluQuadricDrawStyle(myCylinder, GLU_FILL);
+	glColor3f(1.0f, 0.0f, 0.0f);
+	glPushMatrix();
+	glTranslatef(0.0f, 0.0f, 0.0f);
+	glRotatef(90.0f, 1.0f, 0.0f, 0.0f);
+	gluCylinder(myCylinder, 0.1, 0.1, 2.5, 16, 16);
+	glPopMatrix();
+	gluDeleteQuadric(myCylinder);
+}
+
+void draw_seg7() {
+	GLUquadricObj *myCylinder;
+	myCylinder = gluNewQuadric();
+	gluQuadricDrawStyle(myCylinder, GLU_FILL);
+	glColor3f(1.0f, 0.0f, 0.0f);
+	glPushMatrix();
+	glTranslatef(-1.75, -2.5f, 0.0f);
+	glRotatef(90.0f, 0.0f, 1.0f, 0.0f);
+	gluCylinder(myCylinder, 0.1, 0.1, 1.75, 16, 16);
+	glPopMatrix();
+	gluDeleteQuadric(myCylinder);
+}
+
+void draw_seg8() {
+	GLUquadricObj *myCylinder;
+	myCylinder = gluNewQuadric();
+	gluQuadricDrawStyle(myCylinder, GLU_FILL);
+	glColor3f(1.0f, 0.0f, 0.0f);
+	glPushMatrix();
+	glTranslatef(-3.5, -2.5f, 0.0f);
+	glRotatef(90.0f, 0.0f, 1.0f, 0.0f);
+	gluCylinder(myCylinder, 0.1, 0.1, 1.75, 16, 16);
+	glPopMatrix();
+	gluDeleteQuadric(myCylinder);
+}
+
+void draw_seg9() {
+	GLUquadricObj *myCylinder;
+	myCylinder = gluNewQuadric();
+	gluQuadricDrawStyle(myCylinder, GLU_FILL);
+	glColor3f(1.0f, 0.0f, 0.0f);
+	glPushMatrix();
+	glTranslatef(-3.5f, 0.0f, 0.0f);
+	glRotatef(90.0f, 0.0f, 1.0f, 0.0f);
+	gluCylinder(myCylinder, 0.1, 0.1, 1.75, 16, 16);
+	glPopMatrix();
+	gluDeleteQuadric(myCylinder);
+}
+
+void draw_seg10() {
+	GLUquadricObj *myCylinder;
+	myCylinder = gluNewQuadric();
+	gluQuadricDrawStyle(myCylinder, GLU_FILL);
+	glColor3f(1.0f, 0.0f, 0.0f);
+	glPushMatrix();
+	glTranslatef(-1.75, 2.5f, 0.0f);
+	glRotatef(90.0f, 1.0f, 0.0f, 0.0f);
+	gluCylinder(myCylinder, 0.1, 0.1, 2.5, 16, 16);
+	glPopMatrix();
+	gluDeleteQuadric(myCylinder);
+}
+
+void draw_seg11() {
+	GLUquadricObj *myCylinder;
+	myCylinder = gluNewQuadric();
+	gluQuadricDrawStyle(myCylinder, GLU_FILL);
+	glColor3f(1.0f, 0.0f, 0.0f);
+	glPushMatrix();
+	glTranslatef(-1.75, 0.0f, 0.0f);
+	glRotatef(90.0f, 0.0f, 1.0f, 0.0f);
+	gluCylinder(myCylinder, 0.1, 0.1, 1.75, 16, 16);
+	glPopMatrix();
+	gluDeleteQuadric(myCylinder);
+}
+
+void draw_seg12() {
+	GLUquadricObj *myCylinder;
+	myCylinder = gluNewQuadric();
+	gluQuadricDrawStyle(myCylinder, GLU_FILL);
+	glColor3f(1.0f, 0.0f, 0.0f);
+	glPushMatrix();
+	glTranslatef(-1.75, 0.0f, 0.0f);
+	glRotatef(90.0f, 1.0f, 0.0f, 0.0f);
+	gluCylinder(myCylinder, 0.1, 0.1, 2.5, 16, 16);
+	glPopMatrix();
+	gluDeleteQuadric(myCylinder);
+}
+
+void draw_seg13() {
+	GLUquadricObj *myCylinder;
+	myCylinder = gluNewQuadric();
+	gluQuadricDrawStyle(myCylinder, GLU_FILL);
+	glColor3f(1.0f, 0.0f, 0.0f);
+	glPushMatrix();
+	glTranslatef(-1.75f, 0.0f, 0.0f);
+	glRotatef(-90.0f, 1.5f, 1.0f, 0.0f);
+	gluCylinder(myCylinder, 0.1, 0.1, 3.0, 16, 16);
+	glPopMatrix();
+	gluDeleteQuadric(myCylinder);
+}
+
+void draw_seg14() {
+	GLUquadricObj *myCylinder;
+	myCylinder = gluNewQuadric();
+	gluQuadricDrawStyle(myCylinder, GLU_FILL);
+	glColor3f(1.0f, 0.0f, 0.0f);
+	glPushMatrix();
+	glTranslatef(-1.75, 0.0f, 0.0f);
+	glRotatef(90.0f, 1.0f, 0.0f, 0.0f);
+	glRotatef(145.0f, 0.0f, 1.0f, 0.0f);
+	gluCylinder(myCylinder, 0.1, 0.1, 3.0, 16, 16);
+	glPopMatrix();
+	gluDeleteQuadric(myCylinder);
+}
+
+void draw_seg15() {
+{
+	GLUquadricObj *myCylinder;
+	myCylinder = gluNewQuadric();
+	gluQuadricDrawStyle(myCylinder, GLU_FILL);
+	glColor3f(1.0f, 0.0f, 0.0f);
+	glPushMatrix();
+	glTranslatef(-1.75, 0.0f, 0.0f);
+	glRotatef(90.0f, 1.0f, 0.0f, 0.0f);
+	glRotatef(-35.0f, 0.0f, 1.0f, 0.0f);
+	gluCylinder(myCylinder, 0.1, 0.1, 3.0, 16, 16);
+	glPopMatrix();
+	gluDeleteQuadric(myCylinder);
+}
+}
+
+void draw_seg16() {
+	GLUquadricObj *myCylinder;
+	myCylinder = gluNewQuadric();
+	gluQuadricDrawStyle(myCylinder, GLU_FILL);
+	glColor3f(1.0f, 0.0f, 0.0f);
+	glPushMatrix();
+	glTranslatef(-1.75f, 0.0f, 0.0f);
+	glRotatef(90.0f, 1.5f, 1.0f, 0.0f);
+	gluCylinder(myCylinder, 0.1, 0.1, 3.0, 16, 16);
+	glPopMatrix();
+	gluDeleteQuadric(myCylinder);
+}
+
+void draw_disk()//creates seating for stadium as well as field
+{
+	GLUquadricObj *myDisk;
+	myDisk = gluNewQuadric();
+	gluQuadricDrawStyle(myDisk, GLU_FILL);
+	glPushMatrix();
+	glTranslatef(0.0f,3.0f,0.0f);
+	glTranslatef(0.0f,0.0f,0.0f);
+	// glTranslatef(0.0f,5.0f,0.0f);
+	glRotatef(180.0f, 1.0f, 0.0f, 0.0f);
+	glColor3f(0.2f, 0.2f, 0.2f);
+	glPushMatrix();
+	glTranslatef(0.0f,0.0f,-6.0f);
+	gluDisk(myDisk, 24 ,25, 6, 1);
+	glPopMatrix();
+	gluDisk(myDisk, 24 ,25, 6, 1);
+	glColor3f(0.3f, 0.3f, 0.3f);
+	glPushMatrix();
+	glTranslatef(0.0f,0.0f,-5.0f);
+	gluDisk(myDisk, 23 ,24, 6, 1);
+	glPopMatrix();
+	gluDisk(myDisk, 23 ,24, 6, 1);
+	glColor3f(0.4f, 0.4f, 0.4f);
+	glPushMatrix();
+	glTranslatef(0.0f,0.0f,-4.0f);
+	gluDisk(myDisk, 22 ,23, 6, 1);
+	glPopMatrix();
+	gluDisk(myDisk, 22 ,23, 6, 1);
+	glColor3f(0.5f, 0.5f, 0.5f);
+	glPushMatrix();
+	glTranslatef(0.0f,0.0f,-3.0f);
+	gluDisk(myDisk, 21 ,22, 6, 1);
+	glPopMatrix();
+	gluDisk(myDisk, 21 ,22, 6, 1);
+	glColor3f(0.6f, 0.6f, 0.6f);
+	glPushMatrix();
+	glTranslatef(0.0f,0.0f,-2.0f);
+	gluDisk(myDisk, 20, 21, 6, 1);
+	glPopMatrix();
+	// glColor3f(0.1f, 1.0f, 0.1f);
+	// gluDisk(myDisk, 0 ,8, 6, 1);//field
+	// glColor3f(0.2f, 0.2f, 0.2f);
+  ground.draw();
+	gluDeleteQuadric(myDisk);
+	glPopMatrix();
+
+}
+
+void draw_cylinder()//creates stadium
+{
+	GLUquadricObj *myCylinder;
+	myCylinder = gluNewQuadric();
+	gluQuadricDrawStyle(myCylinder, GLU_FILL);
+	glPushMatrix();
+	glTranslatef(0.0f,3.0f,0.0f);
+	glTranslatef(0.0f,0.0f,0.0f);
+	// glTranslatef(0.0f,5.0f, 0.0f);
+	glRotatef(180.0f, 1.0f, 0.0f, 0.0f);
+	glRotatef(180.0f, 0.0f, 1.0f, 0.0f);
+	glColor3f(0.2f, 0.2f, 0.2f);
+	gluCylinder(myCylinder, 25 ,25, 7,6, 1);
+	glColor3f(0.3f, 0.3f, 0.3f);
+	gluCylinder(myCylinder, 24 ,24, 6,6, 1);
+	glColor3f(0.4f, 0.4f, 0.4f);
+	gluCylinder(myCylinder, 23 ,23, 5,6, 1);
+	glColor3f(0.5f, 0.5f, 0.5f);
+	gluCylinder(myCylinder, 22 ,22, 4,6, 1);
+	glColor3f(0.6f, 0.6f, 0.6f);
+	gluCylinder(myCylinder, 21 ,21, 3,6, 1);
+	gluDeleteQuadric(myCylinder);
+	glPopMatrix();
+
+}
+
+
+
+void draw_signs()//creates signs
+{
+	GLUquadricObj *myDisk;
+	myDisk = gluNewQuadric();
+	gluQuadricDrawStyle(myDisk, GLU_FILL);
+	glPushMatrix();
+	glColor3f(0.0f, 0.0f, 0.0f);
+	glRotatef(45.0f, 0.0f, 0.0f, 1.0f);
+	glRotatef(30.0f,1.0f,1.0f,0.0f);
+	glTranslatef(-1,2,-6);
+	gluDisk(myDisk, 0 ,4, 4, 1);
+	glPopMatrix();
+	glPushMatrix();
+	glColor3f(1.0f, 1.0f, 1.0f);
+	glRotatef(45.0f, 0.0f, 0.0f, 1.0f);
+	glRotatef(-30.0f,1.0f,1.0f,0.0f);
+	glTranslatef(1.5,-1,-7);
+	gluDisk(myDisk, 0 ,4, 4, 1);
+	glPopMatrix();
+	glPushMatrix();
+	glColor3f(0.0f, 0.0f, 0.0f);
+	glRotatef(45.0f, 0.0f, 0.0f, 1.0f);
+	glRotatef(-90.0f,1.0f,1.0f,0.0f);
+	glTranslatef(4,-3,-10);
+	gluDisk(myDisk, 0 ,4, 4, 1);
+	glPopMatrix();
+}
+
+
+void updatescreen()//changes the sign writing
+{
+
+	if (south == 1) {
+		glPushMatrix();
+		glScalef(.2,.2,.2);
+		glTranslatef(20,10,-25);
+		glRotatef(-40.0f, 0.0f, 1.0f, 0.0f);
+		draw_seg1();draw_seg2();draw_seg3();draw_seg4();
+		draw_seg5();draw_seg9();draw_seg11();draw_seg16();//R
+		glPopMatrix();
+		glPushMatrix();
+		glScalef(.2,.2,.2);
+		glTranslatef(23,10,-23);
+		glRotatef(-40.0f, 0.0f, 1.0f, 0.0f);
+		draw_seg1();draw_seg2();draw_seg3();draw_seg4();
+		draw_seg5();draw_seg6();draw_seg7();draw_seg8();//O
+		glPopMatrix();
+		glPushMatrix();
+		glScalef(.2,.2,.2);
+		glTranslatef(26,10,-21);
+		glRotatef(-40.0f, 0.0f, 1.0f, 0.0f);
+		draw_seg1();draw_seg2();draw_seg7();draw_seg8();//L
+		glPopMatrix();
+		glPushMatrix();
+		glScalef(.2,.2,.2);
+		glTranslatef(29,10,-19);
+		glRotatef(-40.0f, 0.0f, 1.0f, 0.0f);
+		draw_seg1();draw_seg2();draw_seg7();draw_seg8();//L
+		glPopMatrix();
+		glPushMatrix();
+		glScalef(.2,.2,.2);
+		glTranslatef(20,3,-25);
+		glRotatef(-40.0f, 0.0f, 1.0f, 0.0f);
+		draw_seg3();draw_seg4();draw_seg10();draw_seg12();//T
+		glPopMatrix();
+		glPushMatrix();
+		glScalef(.2,.2,.2);
+		glTranslatef(23,3,-23);
+		glRotatef(-40.0f, 0.0f, 1.0f, 0.0f);
+		draw_seg3();draw_seg4();draw_seg7();draw_seg8();
+		draw_seg10();draw_seg12();//I
+		glPopMatrix();
+		glPushMatrix();
+		glScalef(.2,.2,.2);
+		glTranslatef(26,3,-21);
+		glRotatef(-40.0f, 0.0f, 1.0f, 0.0f);
+		draw_seg3();draw_seg4();draw_seg5();draw_seg6();
+		draw_seg7();draw_seg8();draw_seg10();draw_seg12();//D
+		glPopMatrix();
+		glPushMatrix();
+		glScalef(.2,.2,.2);
+		glTranslatef(29,3,-19);
+		glRotatef(-40.0f, 0.0f, 1.0f, 0.0f);
+		draw_seg1();draw_seg2();draw_seg3();draw_seg4();
+		draw_seg7();draw_seg8();draw_seg9();draw_seg11();//E
+		glPopMatrix();
+	}
+	if(south == 2) {
+		glPushMatrix();
+		glScalef(.2,.2,.2);
+		glTranslatef(23,10,-23);
+		glRotatef(-40.0f, 0.0f, 1.0f, 0.0f);
+		draw_seg1();draw_seg2();draw_seg3();draw_seg4();
+		draw_seg6();draw_seg7();draw_seg8();draw_seg11();//G
+		glPopMatrix();
+		glPushMatrix();
+		glScalef(.2,.2,.2);
+		glTranslatef(27,10,-21);
+		glRotatef(-40.0f, 0.0f, 1.0f, 0.0f);
+		draw_seg1();draw_seg2();draw_seg3();draw_seg4();
+		draw_seg5();draw_seg6();draw_seg7();draw_seg8();//O
+		glPopMatrix();
+		glPushMatrix();
+		glScalef(.2,.2,.2);
+		glTranslatef(20,3,-25);
+		glRotatef(-40.0f, 0.0f, 1.0f, 0.0f);
+		draw_seg3();draw_seg4();draw_seg5();draw_seg6();
+		draw_seg7();draw_seg8();draw_seg10();draw_seg11();draw_seg12();//B
+		glPopMatrix();
+		glPushMatrix();
+		glScalef(.2,.2,.2);
+		glTranslatef(24,3,-23);
+		glRotatef(-40.0f, 0.0f, 1.0f, 0.0f);
+		draw_seg1();draw_seg2();draw_seg3();draw_seg4();
+		draw_seg5();draw_seg6();draw_seg9();draw_seg11();//A
+		glPopMatrix();
+		glPushMatrix();
+		glScalef(.2,.2,.2);
+		glTranslatef(28,3,-21);
+		glRotatef(-40.0f, 0.0f, 1.0f, 0.0f);
+		draw_seg1();draw_seg2();draw_seg5();draw_seg6();
+		draw_seg13();draw_seg14();//M
+		glPopMatrix();
+		glPushMatrix();
+		glScalef(.2,.2,.2);
+		glTranslatef(32,3,-19);
+		glRotatef(-40.0f, 0.0f, 1.0f, 0.0f);
+		draw_seg1();draw_seg2();draw_seg3();draw_seg4();
+		draw_seg5();draw_seg6();draw_seg9();draw_seg11();//A
+		glPopMatrix();
+
+	}
+	if(south == 3) {
+		glPushMatrix();
+		glScalef(.2,.2,.2);
+		glTranslatef(20,10,-25);
+		glRotatef(-40.0f, 0.0f, 1.0f, 0.0f);
+		draw_seg1();draw_seg2();draw_seg3();draw_seg4();
+		draw_seg5();draw_seg6();draw_seg9();draw_seg11();//A
+		glPopMatrix();
+		glPushMatrix();
+		glScalef(.2,.2,.2);
+		glTranslatef(23,10,-23);
+		glRotatef(-40.0f, 0.0f, 1.0f, 0.0f);
+		draw_seg1();draw_seg2();draw_seg5();
+		draw_seg6();draw_seg15();draw_seg16();//W
+		glPopMatrix();
+		glPushMatrix();
+		glScalef(.2,.2,.2);
+		glTranslatef(26,10,-21);
+		glRotatef(-40.0f, 0.0f, 1.0f, 0.0f);
+		draw_seg1();draw_seg2();draw_seg3();draw_seg4();
+		draw_seg5();draw_seg6();draw_seg9();draw_seg11();//A
+		glPopMatrix();
+		glPushMatrix();
+		glScalef(.2,.2,.2);
+		glTranslatef(29,10,-19);
+		glRotatef(-40.0f, 0.0f, 1.0f, 0.0f);
+		draw_seg2();draw_seg5();draw_seg9();
+		draw_seg11();draw_seg12();//Y
+		glPopMatrix();
+		glPushMatrix();
+		glScalef(.2,.2,.2);
+		glTranslatef(23,3,-23);
+		glRotatef(-40.0f, 0.0f, 1.0f, 0.0f);
+		draw_seg5();draw_seg6();//1
+		glPopMatrix();
+		glPushMatrix();
+		glScalef(.2,.2,.2);
+		glTranslatef(26,3,-21);
+		glRotatef(-40.0f, 0.0f, 1.0f, 0.0f);
+		draw_seg5();draw_seg6();//1
+		glPopMatrix();
+	}
+	if (west == 1) {
+
+		glPushMatrix();
+		glScalef(.2,.2,.2);
+		glTranslatef(50,10,24);
+		glRotatef(-90.0f, 0.0f, 1.0f, 0.0f);
+		draw_seg1();draw_seg2();draw_seg3();draw_seg4();
+		draw_seg5();draw_seg9();draw_seg11();draw_seg16();//R
+		glPopMatrix();
+		glPushMatrix();
+		glScalef(.2,.2,.2);
+		glTranslatef(50,10,30);
+		glRotatef(-90.0f, 0.0f, 1.0f, 0.0f);
+		draw_seg1();draw_seg2();draw_seg5();draw_seg6();
+		draw_seg13();draw_seg14();//M
+		glPopMatrix();
+		glPushMatrix();
+		glScalef(.2,.2,.2);
+		glTranslatef(50,4,24);
+		glRotatef(-90.0f, 0.0f, 1.0f, 0.0f);
+		draw_seg1();draw_seg2();draw_seg3();draw_seg4();
+		draw_seg9();draw_seg11();//F
+		glPopMatrix();
+		glPushMatrix();
+		glScalef(.2,.2,.2);
+		glTranslatef(50,4,30);
+		glRotatef(-90.0f, 0.0f, 1.0f, 0.0f);
+		draw_seg3();draw_seg4();draw_seg10();draw_seg12();//T
+		glPopMatrix();
+
+	}
+	if(west == 2) {
+		glPushMatrix();
+		glScalef(.2,.2,.2);
+		glTranslatef(50,10,20);
+		glRotatef(-90.0f, 0.0f, 1.0f, 0.0f);
+		draw_seg1();draw_seg2();draw_seg5();draw_seg6();
+		draw_seg9();draw_seg11();//H
+		glPopMatrix();
+		glPushMatrix();
+		glScalef(.2,.2,.2);
+		glTranslatef(50,10,24);
+		glRotatef(-90.0f, 0.0f, 1.0f, 0.0f);
+		draw_seg1();draw_seg2();draw_seg3();draw_seg4();
+		draw_seg5();draw_seg6();draw_seg7();draw_seg8();//O
+		glPopMatrix();
+		glPushMatrix();
+		glScalef(.2,.2,.2);
+		glTranslatef(50,10,28);
+		glRotatef(-90.0f, 0.0f, 1.0f, 0.0f);
+		draw_seg1();draw_seg2();draw_seg5();draw_seg6();
+		draw_seg13();draw_seg14();//M
+		glPopMatrix();
+		glPushMatrix();
+		glScalef(.2,.2,.2);
+		glTranslatef(50,10,32);
+		glRotatef(-90.0f, 0.0f, 1.0f, 0.0f);
+		draw_seg1();draw_seg2();draw_seg3();draw_seg4();
+		draw_seg7();draw_seg8();draw_seg9();draw_seg11();//E
+		glPopMatrix();
+		glPushMatrix();
+		glScalef(.2,.2,.2);
+		glTranslatef(50,4,24);
+		glRotatef(-90.0f, 0.0f, 1.0f, 0.0f);
+		draw_seg1();draw_seg3();draw_seg4();draw_seg5();
+		draw_seg7();draw_seg8();draw_seg9();draw_seg11();//2
+		glPopMatrix();
+		glPushMatrix();
+		glScalef(.2,.2,.2);
+		glTranslatef(50,4,28);
+		glRotatef(-90.0f, 0.0f, 1.0f, 0.0f);
+		draw_seg2();draw_seg5();draw_seg6();
+		draw_seg9();draw_seg11();//4
+		glPopMatrix();
+	}
+	if(west == 3) {
+		glPushMatrix();
+		glScalef(.2,.2,.2);
+		glTranslatef(50,10,20);
+		glRotatef(-90.0f, 0.0f, 1.0f, 0.0f);
+		draw_seg1();draw_seg2();draw_seg3();draw_seg4();
+		draw_seg5();draw_seg6();draw_seg9();draw_seg11();//A
+		glPopMatrix();
+		glPushMatrix();
+		glScalef(.2,.2,.2);
+		glTranslatef(50,10,24);
+		glRotatef(-90.0f, 0.0f, 1.0f, 0.0f);
+		draw_seg1();draw_seg2();draw_seg5();
+		draw_seg6();draw_seg15();draw_seg16();//W
+		glPopMatrix();
+		glPushMatrix();
+		glScalef(.2,.2,.2);
+		glTranslatef(50,10,28);
+		glRotatef(-90.0f, 0.0f, 1.0f, 0.0f);
+		draw_seg1();draw_seg2();draw_seg3();draw_seg4();
+		draw_seg5();draw_seg6();draw_seg9();draw_seg11();//A
+		glPopMatrix();
+		glPushMatrix();
+		glScalef(.2,.2,.2);
+		glTranslatef(50,10,32);
+		glRotatef(-90.0f, 0.0f, 1.0f, 0.0f);
+		draw_seg2();draw_seg5();draw_seg9();
+		draw_seg11();draw_seg12();//Y
+		glPopMatrix();
+		glPushMatrix();
+		glScalef(.2,.2,.2);
+		glTranslatef(50,4,24);
+		glRotatef(-90.0f, 0.0f, 1.0f, 0.0f);
+		draw_seg5();draw_seg6();//1
+		glPopMatrix();
+		glPushMatrix();
+		glScalef(.2,.2,.2);
+		glTranslatef(50,4,28);
+		glRotatef(-40.0f, 0.0f, 1.0f, 0.0f);
+		draw_seg5();draw_seg6();//1
+		glPopMatrix();
+	}
+	if (east == 1) {
+		glPushMatrix();
+		glScalef(.2,.2,.2);
+		glTranslatef(-30,10,-17);
+		glRotatef(-335.0f, 0.0f, 1.0f, 0.0f);
+		draw_seg1();draw_seg2();draw_seg3();draw_seg4();
+		draw_seg5();draw_seg9();draw_seg11();draw_seg16();//R
+		glPopMatrix();
+		glPushMatrix();
+		glScalef(.2,.2,.2);
+		glTranslatef(-26,10,-18);
+		glRotatef(-335.0f, 0.0f, 1.0f, 0.0f);
+		draw_seg1();draw_seg2();draw_seg3();draw_seg4();
+		draw_seg5();draw_seg6();draw_seg7();draw_seg8();//O
+		glPopMatrix();
+		glPushMatrix();
+		glScalef(.2,.2,.2);
+		glTranslatef(-22,10,-19);
+		glRotatef(-335.0f, 0.0f, 1.0f, 0.0f);
+		draw_seg1();draw_seg2();draw_seg7();draw_seg8();//L
+		glPopMatrix();
+		glPushMatrix();
+		glScalef(.2,.2,.2);
+		glTranslatef(-18,10,-20);
+		glRotatef(-335.0f, 0.0f, 1.0f, 0.0f);
+		draw_seg1();draw_seg2();draw_seg7();draw_seg8();//L
+		glPopMatrix();
+		glPushMatrix();
+		glScalef(.2,.2,.2);
+		glTranslatef(-30,4,-17);
+		glRotatef(-335.0f, 0.0f, 1.0f, 0.0f);
+		draw_seg3();draw_seg4();draw_seg10();draw_seg12();//T
+		glPopMatrix();
+		glPushMatrix();
+		glScalef(.2,.2,.2);
+		glTranslatef(-26,4,-18);
+		glRotatef(-335.0f, 0.0f, 1.0f, 0.0f);
+		draw_seg3();draw_seg4();draw_seg7();draw_seg8();
+		draw_seg10();draw_seg12();//I
+		glPopMatrix();
+		glPushMatrix();
+		glScalef(.2,.2,.2);
+		glTranslatef(-22,4,-19);
+		glRotatef(-335.0f, 0.0f, 1.0f, 0.0f);
+		draw_seg3();draw_seg4();draw_seg5();draw_seg6();
+		draw_seg7();draw_seg8();draw_seg10();draw_seg12();//D
+		glPopMatrix();
+		glPushMatrix();
+		glScalef(.2,.2,.2);
+		glTranslatef(-17.5,4,-20);
+		glRotatef(-335.0f, 0.0f, 1.0f, 0.0f);
+		draw_seg1();draw_seg2();draw_seg3();draw_seg4();
+		draw_seg7();draw_seg8();draw_seg9();draw_seg11();//E
+		glPopMatrix();
+	}
+	if(east == 2) {
+		glPushMatrix();
+		glScalef(.2,.2,.2);
+		glTranslatef(-30,10,-17);
+		glRotatef(-335.0f, 0.0f, 1.0f, 0.0f);
+		draw_seg1();draw_seg2();draw_seg5();draw_seg6();
+		draw_seg9();draw_seg11();//H
+		glPopMatrix();
+		glPushMatrix();
+		glScalef(.2,.2,.2);
+		glTranslatef(-26,10,-18);
+		glRotatef(-335.0f, 0.0f, 1.0f, 0.0f);
+		draw_seg1();draw_seg2();draw_seg3();draw_seg4();
+		draw_seg5();draw_seg6();draw_seg7();draw_seg8();//O
+		glPopMatrix();
+		glPushMatrix();
+		glScalef(.2,.2,.2);
+		glTranslatef(-22,10,-19);
+		glRotatef(-335.0f, 0.0f, 1.0f, 0.0f);
+		draw_seg1();draw_seg2();draw_seg5();draw_seg6();
+		draw_seg13();draw_seg14();//M
+		glPopMatrix();
+		glPushMatrix();
+		glScalef(.2,.2,.2);
+		glTranslatef(-18,10,-20);
+		glRotatef(-335.0f, 0.0f, 1.0f, 0.0f);
+		draw_seg1();draw_seg2();draw_seg3();draw_seg4();
+		draw_seg7();draw_seg8();draw_seg9();draw_seg11();//E
+		glPopMatrix();
+		glPushMatrix();
+		glScalef(.2,.2,.2);
+		glTranslatef(-26,5,-17);
+		glRotatef(-335.0f, 0.0f, 1.0f, 0.0f);
+		draw_seg5();draw_seg6();//1
+		glPopMatrix();
+		glPushMatrix();
+		glScalef(.2,.2,.2);
+		glTranslatef(-22,5,-18);
+		glRotatef(-335.0f, 0.0f, 1.0f, 0.0f);
+		draw_seg2();draw_seg5();draw_seg6();
+		draw_seg9();draw_seg11();//4
+		glPopMatrix();
+	}
+	if(east == 3) {
+		glPushMatrix();
+		glScalef(.2,.2,.2);
+		glTranslatef(-30,10,-17);
+		glRotatef(-335.0f, 0.0f, 1.0f, 0.0f);
+		draw_seg1();draw_seg2();draw_seg3();draw_seg4();
+		draw_seg5();draw_seg6();draw_seg9();draw_seg11();//A
+		glPopMatrix();
+		glPushMatrix();
+		glScalef(.2,.2,.2);
+		glTranslatef(-26,10,-18);
+		glRotatef(-335.0f, 0.0f, 1.0f, 0.0f);
+		draw_seg1();draw_seg2();draw_seg5();
+		draw_seg6();draw_seg15();draw_seg16();//W
+		glPopMatrix();
+		glPushMatrix();
+		glScalef(.2,.2,.2);
+		glTranslatef(-22,10,-19);
+		glRotatef(-335.0f, 0.0f, 1.0f, 0.0f);
+		draw_seg1();draw_seg2();draw_seg3();draw_seg4();
+		draw_seg5();draw_seg6();draw_seg9();draw_seg11();//A
+		glPopMatrix();
+		glPushMatrix();
+		glScalef(.2,.2,.2);
+		glTranslatef(-18,10,-20);
+		glRotatef(-335.0f, 0.0f, 1.0f, 0.0f);
+		draw_seg2();draw_seg5();draw_seg9();
+		draw_seg11();draw_seg12();//Y
+		glPopMatrix();
+		glPushMatrix();
+		glScalef(.2,.2,.2);
+		glTranslatef(-26,5,-17);
+		glRotatef(-335.0f, 0.0f, 1.0f, 0.0f);
+		draw_seg5();draw_seg6();//1
+		glPopMatrix();
+		glPushMatrix();
+		glScalef(.2,.2,.2);
+		glTranslatef(-22,5,-18);
+		glRotatef(-335.0f, 0.0f, 1.0f, 0.0f);
+		draw_seg5();draw_seg6();//1
+		glPopMatrix();
+	}
+
+}
+
+
 
 void draw() {
     glLoadIdentity(); //Reset the drawing perspective
@@ -229,9 +980,32 @@ void draw() {
 //    glEnd();
 
 
+// drawing stadium
+
+  	draw_disk();
+  	draw_cylinder();
+  	draw_signs();
+    updatescreen();
+  	glFlush();
+  	// glutSwapBuffers();
+
+
+
+//hockey stick drawing
+    glPushMatrix();
+    // int x1 = sphere.positionCurrent.x, y1 = sphere.positionCurrent.y - 0.2, z1 = sphere.positionCurrent.z + 0.2;
+    glColor3f(1.0, 0.0, 1.0);
+    // glTranslatef(x1, y1, z1);
+    glTranslatef(0, 0 - 0.2, 0 + 0.2);
+    glRotatef(15.0f, 0.0f, 1.0f, 0.0f);
+    drawHockeyStick(70.0, 100.0, 50);
+    glPopMatrix();
+
+	
+	
     // draw the ball
     glPushMatrix();
-    glColor3f(1.0, 1.0, 0.0);
+    glColor3f(1.0, 1.0, 1.0);
     glTranslatef(sphere.positionCurrent.x, sphere.positionCurrent.y, sphere.positionCurrent.z);
     glutSolidSphere(BALL_RADIUS, 20, 20);
     glPopMatrix();
