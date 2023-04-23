@@ -73,7 +73,7 @@ void drawHUD();
 
 
 enum mode {
-    ADJUSTING, AIMING, POWERING, SHOOTING, HELP, NONE
+    ADJUSTING, AIMING, POWERING, SHOOTING, HELP, NONE, PAUSE
 };
 
 void backgroundMusicPlayer(int);

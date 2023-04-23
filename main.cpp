@@ -16,6 +16,7 @@ unsigned int Tries, Goals;
 vector<float> currentTextColor = {1, 1, 1, 1};
 
 bool isDay;
+bool isPause = false;
 
 void showScore();
 
@@ -1160,6 +1161,9 @@ void handleKeypress(unsigned char key, //The key that was pressed
                     cameraPos[0] += 0.2;
                 }
                 break;
+
+            // case 'z': 
+            //     gluLookAt()
         }
     } else {
         if (key == 27) {
@@ -1329,8 +1333,8 @@ void handlePassiveMouse(int x, int y) {
     }
 }
 
-// void handleMouse(int button, int state, int x, int y) {
-//     if(state == GLUT_UP) {
+void handleMouse(int button, int state, int x, int y) {
+    if(state == GLUT_UP) {
 //         switch(button) {
 //             case 3: // scroll up
 //                 sphereCamera.distance -= 0.1f;
@@ -1345,8 +1349,28 @@ void handlePassiveMouse(int x, int y) {
 // //            cout<<sphereCamera.distance<<endl;
 //                 break;
 //         }
-//     }
-// }
+        cout << x << " " << y << endl;
+        GLint viewport[4];
+        GLdouble modelview[16];
+        GLdouble projection[16];
+        GLfloat winX, winY, winZ;
+        GLdouble posX, posY, posZ;
+
+        // Get the viewport, modelview, and projection matrices
+        glGetIntegerv(GL_VIEWPORT, viewport);
+        glGetDoublev(GL_MODELVIEW_MATRIX, modelview);
+        glGetDoublev(GL_PROJECTION_MATRIX, projection);
+
+        // Convert the 2D mouse coordinates into 3D world coordinates
+        winX = (float)x;
+        winY = (float)viewport[3] - (float)y;
+        glReadPixels(x, int(winY), 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &winZ);
+        gluUnProject(winX, winY, winZ, modelview, projection, viewport, &posX, &posY, &posZ);
+
+        // Print the 3D world coordinates
+        printf("Clicked at (%f, %f, %f)\n", posX, posY, posZ);
+    }
+}
 
 void myInit(void) {
     // glClearColor(137 / 255.0, 206 / 255.0, 255 / 255.0, 0);
@@ -1367,13 +1391,13 @@ void myInit(void) {
     glEnable(GL_LIGHT0); //Enable light #0
     glEnable(GL_LIGHT1); //Enable light #1
     glEnable(GL_LIGHT2); //Enable light #2
-    glDisable(GL_LIGHT3); //Enable light #3
-    glDisable(GL_LIGHT4); //Enable light #4
+    glDisable(GL_LIGHT3); //Disable light #3
+    glDisable(GL_LIGHT4); //Disable light #4
     glEnable(GL_NORMALIZE); //Automatically normalize normals
     glShadeModel(GL_SMOOTH);
     backgroundMusicPlayer(0);
     updateDefenderPosition(0);
-    glutSetCursor(GLUT_CURSOR_NONE);
+    // glutSetCursor(GLUT_CURSOR_NONE);
     glEnable(GL_MULTISAMPLE);
 
 }
@@ -1387,7 +1411,7 @@ int main(int argc, char *argv[]) {
     glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA | GLUT_MULTISAMPLE);
     glutInitWindowSize(WIDTH, HEIGHT);
     glutCreateWindow(WINDOW_NAME);
-    glutFullScreen();
+    // glutFullScreen();
     glutReshapeFunc(handleResize);
     glutIdleFunc(idle);
     glutKeyboardFunc(handleKeypress);
@@ -1401,7 +1425,7 @@ int main(int argc, char *argv[]) {
     ads = convertAndLoadTexture("resources/ads.txt");
     leftArm = convertAndLoadTexture("resources/left_arm.txt");
     rightArm = convertAndLoadTexture("resources/right_arm.txt");
-    glutMouseFunc(NULL);
+    glutMouseFunc(handleMouse);
     glutDisplayFunc(draw);
     myInit();
     glutMainLoop();
