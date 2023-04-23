@@ -1005,7 +1005,7 @@ void draw() {
 	
     // draw the ball
     glPushMatrix();
-    glColor3f(1.0, 1.0, 0.0);
+    glColor3f(1.0, 1.0, 1.0);
     glTranslatef(sphere.positionCurrent.x, sphere.positionCurrent.y, sphere.positionCurrent.z);
     glutSolidSphere(BALL_RADIUS, 20, 20);
     glPopMatrix();
