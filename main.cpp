@@ -712,40 +712,44 @@ void handlePassiveMouse(int x, int y) {
 
 void handleMouse(int button, int state, int x, int y) {
     if(state == GLUT_UP) {
-//         switch(button) {
-//             case 3: // scroll up
-//                 sphereCamera.distance -= 0.1f;
-//                 sphereCamera.distance += (sphereCamera.distance < MIN_SPHERE_CAMERA_DISTANCE ? 0.1f : 0);
-// //            cout<<sphereCamera.distance<<endl;
+        if(currentMode == ADJUSTING || currentMode == AIMING) {
+            switch(button) {
+                case 3: // scroll up
+                    sphereCamera.distance -= 0.1f;
+                    sphereCamera.distance += (sphereCamera.distance < MIN_SPHERE_CAMERA_DISTANCE ? 0.1f : 0);
+    //            cout<<sphereCamera.distance<<endl;
 
-//                 break;
+                    break;
 
-//             case 4: // scroll down
-//                 sphereCamera.distance += 0.1f;
-//                 sphereCamera.distance -= (sphereCamera.distance > MAX_SPHERE_CAMERA_DISTANCE ? 0.1f : 0);
-// //            cout<<sphereCamera.distance<<endl;
-//                 break;
-//         }
-        cout << x << " " << y << endl;
-        GLint viewport[4];
-        GLdouble modelview[16];
-        GLdouble projection[16];
-        GLfloat winX, winY, winZ;
-        GLdouble posX, posY, posZ;
+                case 4: // scroll down
+                    sphereCamera.distance += 0.1f;
+                    sphereCamera.distance -= (sphereCamera.distance > MAX_SPHERE_CAMERA_DISTANCE ? 0.1f : 0);
+    //            cout<<sphereCamera.distance<<endl;
+                    break;
+            }
+        }
+        // cout << x << " " << y << endl;
+        // GLint viewport[4];
+        // GLdouble modelview[16];
+        // GLdouble projection[16];
+        // GLfloat winX, winY, winZ;
+        // GLdouble posX, posY, posZ;
 
-        // Get the viewport, modelview, and projection matrices
-        glGetIntegerv(GL_VIEWPORT, viewport);
-        glGetDoublev(GL_MODELVIEW_MATRIX, modelview);
-        glGetDoublev(GL_PROJECTION_MATRIX, projection);
+        // // Get the viewport, modelview, and projection matrices
+        // glGetIntegerv(GL_VIEWPORT, viewport);
+        // glGetDoublev(GL_MODELVIEW_MATRIX, modelview);
+        // glGetDoublev(GL_PROJECTION_MATRIX, projection);
 
-        // Convert the 2D mouse coordinates into 3D world coordinates
-        winX = (float)x;
-        winY = (float)viewport[3] - (float)y;
-        glReadPixels(x, int(winY), 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &winZ);
-        gluUnProject(winX, winY, winZ, modelview, projection, viewport, &posX, &posY, &posZ);
+        // // Convert the 2D mouse coordinates into 3D world coordinates
+        // winX = (float)x;
+        // winY = (float)viewport[3] - (float)y;
+        // glReadPixels(x, int(winY), 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &winZ);
+        // gluUnProject(winX, winY, winZ, modelview, projection, viewport, &posX, &posY, &posZ);
 
-        // Print the 3D world coordinates
-        printf("Clicked at (%f, %f, %f)\n", posX, posY, posZ);
+        // // Print the 3D world coordinates
+        // printf("Clicked at (%f, %f, %f)\n", posX, posY, posZ);
+
+        // cout << "Key: " << button << endl;
     }
 }
 

@@ -523,7 +523,7 @@ Press Q to quit
  R"INSTRUCT(
 INSTRUCTIONS
 You can use the mouse to look around.
-Use the +/- keys for zooming in/out.
+Use the +/- keys (or the mouse scroll wheel) for zooming in/out.
 Use I/K to move the camera towards / away from the goalpost.
 Use J/L to move the camera to the left / right of the goalpost.
 Use N to toggle Night Mode.
