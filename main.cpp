@@ -159,6 +159,10 @@ void updatePosCallBack(int _) {
 }
 
 axes cameraPos;
+axes tempCameraPos;
+
+// The pause menu changes the cameraPos coordinates. 
+// To ensure we go back to where we were present initially, we use tempCameraPos
 
 void drawHockeyStick(float innerRadius, float outerRadius, int numSides) {
     float x , y;
@@ -919,21 +923,21 @@ axes lookDist = {0, 0, 20};
 
 void draw() {
     glLoadIdentity(); //Reset the drawing perspective
-    if(currentMode == PAUSE) {
-        // NOTE: This code currently doesn't do anything! Just saying in case someone checks this in the future.
-        // gluLookAt(lookDist[0], lookDist[1], lookDist[2], 0, 0, 0, 0, 0, 1);
-        gluLookAt(0.0, 0.0, -1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0);
-        glBegin(GL_POLYGON);
-        glVertex3f(1, 1, 0);
-        glVertex3f(1, -1, 0);
-        glVertex3f(-1, -1, 0);
-        glVertex3f(-1, 1, 0);
-        glEnd();
-        // cameraPosition({0, 0, 5}, sphereCamera.distance, sphereCamera.zAngle, sphereCamera.xAngle);
-    }
-    else {
+    // if(currentMode == PAUSE) {
+    //     // NOTE: This code currently doesn't do anything! Just saying in case someone checks this in the future.
+    //     // gluLookAt(lookDist[0], lookDist[1], lookDist[2], 0, 0, 0, 0, 0, 1);
+    //     gluLookAt(0.0, 0.0, -1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0);
+    //     glBegin(GL_POLYGON);
+    //     glVertex3f(1, 1, 0);
+    //     glVertex3f(1, -1, 0);
+    //     glVertex3f(-1, -1, 0);
+    //     glVertex3f(-1, 1, 0);
+    //     glEnd();
+    //     // cameraPosition({0, 0, 5}, sphereCamera.distance, sphereCamera.zAngle, sphereCamera.xAngle);
+    // }
+    // else {
         cameraPosition(cameraPos, sphereCamera.distance, sphereCamera.zAngle, sphereCamera.xAngle);
-    }
+    // }
     if (firstTime) {
         glutWarpPointer(WIDTH / 2, HEIGHT);
         firstTime = false;
@@ -1231,6 +1235,8 @@ void handleKeypress(unsigned char key, //The key that was pressed
     }
 
     if(currentMode==PAUSE) {
+        printf("%f, %f, %f\n", cameraPos.x, cameraPos.y, cameraPos.z);
+        printf("%f, %f, %f\n", sphereCamera.distance, sphereCamera.zAngle, sphereCamera.xAngle);
         switch(key) {
             case '+':
                 lookDist[2] += 0.2;
@@ -1240,6 +1246,9 @@ void handleKeypress(unsigned char key, //The key that was pressed
             case '-':
                 lookDist[2] -= 0.2;
                 break;
+
+            case EXIT_KEY:
+                exit(0);
         }
     }
 }
@@ -1361,7 +1370,7 @@ int sgn(T val) {
 
 void handlePassiveMouse(int x, int y) {
 //    if (currentMode == ADJUSTING) {
-    if (currentMode != HELP) {
+    if (currentMode != HELP && currentMode != PAUSE) {
         sphereCamera.xAngle = -90 + (x - WIDTH / 2) * 270 / WIDTH;
         sphereCamera.zAngle = 45 + -1 * (y) * 30 / HEIGHT;
     }
@@ -1383,26 +1392,26 @@ void handleMouse(int button, int state, int x, int y) {
 // //            cout<<sphereCamera.distance<<endl;
 //                 break;
 //         }
-        // cout << x << " " << y << endl;
-        // GLint viewport[4];
-        // GLdouble modelview[16];
-        // GLdouble projection[16];
-        // GLfloat winX, winY, winZ;
-        // GLdouble posX, posY, posZ;
+        cout << x << " " << y << endl;
+        GLint viewport[4];
+        GLdouble modelview[16];
+        GLdouble projection[16];
+        GLfloat winX, winY, winZ;
+        GLdouble posX, posY, posZ;
 
-        // // Get the viewport, modelview, and projection matrices
-        // glGetIntegerv(GL_VIEWPORT, viewport);
-        // glGetDoublev(GL_MODELVIEW_MATRIX, modelview);
-        // glGetDoublev(GL_PROJECTION_MATRIX, projection);
+        // Get the viewport, modelview, and projection matrices
+        glGetIntegerv(GL_VIEWPORT, viewport);
+        glGetDoublev(GL_MODELVIEW_MATRIX, modelview);
+        glGetDoublev(GL_PROJECTION_MATRIX, projection);
 
-        // // Convert the 2D mouse coordinates into 3D world coordinates
-        // winX = (float)x;
-        // winY = (float)viewport[3] - (float)y;
-        // glReadPixels(x, int(winY), 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &winZ);
-        // gluUnProject(winX, winY, winZ, modelview, projection, viewport, &posX, &posY, &posZ);
+        // Convert the 2D mouse coordinates into 3D world coordinates
+        winX = (float)x;
+        winY = (float)viewport[3] - (float)y;
+        glReadPixels(x, int(winY), 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &winZ);
+        gluUnProject(winX, winY, winZ, modelview, projection, viewport, &posX, &posY, &posZ);
 
-        // // Print the 3D world coordinates
-        // printf("Clicked at (%f, %f, %f)\n", posX, posY, posZ);
+        // Print the 3D world coordinates
+        printf("Clicked at (%f, %f, %f)\n", posX, posY, posZ);
     }
 }
 
@@ -1445,7 +1454,7 @@ int main(int argc, char *argv[]) {
     glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA | GLUT_MULTISAMPLE);
     glutInitWindowSize(WIDTH, HEIGHT);
     glutCreateWindow(WINDOW_NAME);
-    glutFullScreen();
+    // glutFullScreen();
     glutReshapeFunc(handleResize);
     glutIdleFunc(idle);
     glutKeyboardFunc(handleKeypress);

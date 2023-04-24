@@ -19,6 +19,7 @@ bool firstTime = true;
 PhysicalState sphere, *determineSphere = NULL;
 
 extern bool isDay;
+extern axes cameraPos;
 
 void handleResize(int w, int h) {
     glViewport(0, 0, w, h);
@@ -245,6 +246,9 @@ camera::camera() {
 }
 
 camera sphereCamera;
+camera tempSphereCamera;
+// The pause menu changes the sphereCamera coordinates. 
+// To ensure we go back to where we were present initially, we use tempSphereCamera
 
 
 void rainBox(double alpha = 0.7) {
@@ -277,6 +281,17 @@ void myShear() {
             0.0, 0.0, 0.0, 1.0
     };
     glMultMatrixf(m);
+}
+
+void drawBitmapText(char *string, float x, float y, float z)
+{
+    char *c;
+    glRasterPos3f(x, y, z);//define position on the screen where to draw text.
+
+    for (c = string; *c != '\0'; c++)
+    {
+        glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, *c);
+    }
 }
 
 double powerMeter = 0.0;
@@ -333,6 +348,28 @@ void drawPowerMeter() {
     glPopMatrix();
 }
 
+void drawString(float x, float y, float z, char *string) {
+  // Save the current matrix
+  glPushMatrix();
+
+  // Translate to the appropriate starting point
+  glTranslatef(x, y, z);
+  glScalef(10.0f, 10.0f, 1.0f);
+
+  // Note: We could change the line width with glLineWidth()
+
+  // Render the characters
+  for (char* c = string; *c != '\0'; c++) {
+    glutStrokeCharacter(GLUT_STROKE_ROMAN, *c);
+  }
+
+  // Another useful function
+  //    int glutStrokeWidth(void *font, int character);
+
+  // Retrieve the original matrix
+  glPopMatrix();
+}
+
 
 void drawHUD() {
     glDisable(GL_LIGHTING);
@@ -380,7 +417,103 @@ I'm adding a new line, is it okay?
         currentTextColor = {1.0, 1.0, 1.0, 1.0};
         writeMultiLineText(instructions, font, CENTER);
         glPopMatrix();
-    } else {   //HUD Render
+    } 
+    else if(currentMode == PAUSE) {
+        const char *instructions = R"INSTRUCT(
+PAUSE MENU
+
+
+
+Press h for showing instructions
+Press Esc to return
+
+
+
+
+
+Press q to quit
+)INSTRUCT";
+        cameraPos.x = cameraPos.y = cameraPos.z = 0.0;
+        sphereCamera.distance = 13.0;
+        sphereCamera.zAngle = 35.0;
+        sphereCamera.xAngle = -90.0;
+        // cameraPosition({0, 0, 0}, 15.0, 35.0, -90.0);
+        
+        // glPushMatrix();
+        // glRotatef(90 + sphereCamera.xAngle, 0, 0, 1);
+        // glRotatef(-sphereCamera.zAngle, 1, 0, 0);
+        glPushMatrix();
+        glRotatef(0, 0, 0, 1);
+        glRotatef(-35.0, 1, 0, 0);
+
+        glTranslatef(0, -BALL_RADIUS-2, -BALL_RADIUS-1);
+
+        glColor4f(0, 0, 0, 0.9);
+        glBegin(GL_QUADS);
+        // glVertex3f(-10, 0, -5);
+        // glVertex3f(10, 0, -5);
+        // glVertex3f(10, 0, 6);
+        // glVertex3f(-10, 0, 6);
+        glVertex3f(-15, 0, -10);
+        glVertex3f(15, 0, -10);
+        glVertex3f(15, 0, 11);
+        glVertex3f(-15, 0, 11);
+        glEnd();
+        glScalef(0.6, 0.6, 0.6);
+        glTranslatef(0, -0.001, 9.5);
+
+        currentTextColor = {1.0, 1.0, 1.0, 1.0};
+        writeMultiLineText(instructions, font, CENTER);
+        glPopMatrix();
+    } 
+    else if(currentMode == ADJUSTING || currentMode == AIMING) {
+        const char *adj_instructions = "\n\n\n\n\n\n\n\n\n\n\n\n\n"
+        "Esc: Pause, Enter: Aiming mode\n";
+        const char *aim_instructions = "\n\n\n\n\n\n\n\n\n\n\n\n\n"
+        "Esc: Pause, Space (hold): Power\n";
+        // cameraPos.x = cameraPos.y = cameraPos.z = 0.0;
+        // sphereCamera.distance = 13.0;
+        // sphereCamera.zAngle = 35.0;
+        // sphereCamera.xAngle = -90.0;
+        // cameraPosition({0, 0, 0}, 15.0, 35.0, -90.0);
+        
+        glPushMatrix();
+        glTranslatef(cameraPos.x, cameraPos.y, cameraPos.z);
+        glTranslatef((sphereCamera.distance-6) * (cos(DEG2GRAD(sphereCamera.zAngle)) * cos(DEG2GRAD(sphereCamera.xAngle))),
+        (sphereCamera.distance-6) * (cos(DEG2GRAD(sphereCamera.zAngle)) * sin(DEG2GRAD(sphereCamera.xAngle))),
+        (sphereCamera.distance-6) * sin(DEG2GRAD(sphereCamera.zAngle)));
+        glRotatef(90 + sphereCamera.xAngle, 0, 0, 1);
+        glRotatef(-sphereCamera.zAngle, 1, 0, 0);
+        // glPushMatrix();
+        // glRotatef(0, 0, 0, 1);
+        // glRotatef(-35.0, 1, 0, 0);
+        glTranslatef(0, -2, -1);
+        currentTextColor = {1.0, 1.0, 1.0, 1.0};
+
+        glColor4f(0, 0, 0, 0.6);
+        glBegin(GL_QUADS);
+        // glVertex3f(-10, 0, -5);
+        // glVertex3f(10, 0, -5);
+        // glVertex3f(10, 0, 6);
+        // glVertex3f(-10, 0, 6);
+        float coords[] = {-2.5, 2.5, -0.5, -5}; // xStart, xEnd, zEnd, zBegin
+        glVertex3f(coords[0], 0, coords[3]);
+        glVertex3f(coords[1], 0, coords[3]);
+        glVertex3f(coords[1], 0, coords[2]);
+        glVertex3f(coords[0], 0, coords[2]);
+        glEnd();
+        glScalef(0.25, 0.25, 0.25);
+        glTranslatef(0, -0.001, 9.5);
+        // glTranslatef(0, -1, -10);
+
+        if(currentMode == ADJUSTING)
+            writeMultiLineText(adj_instructions, font, CENTER);
+        else if(currentMode == AIMING)
+            writeMultiLineText(aim_instructions, font, CENTER);
+
+        glPopMatrix();
+    } 
+    else {   //HUD Render
 
         glDisable(GL_LIGHTING);
         glMatrixMode(GL_PROJECTION);
@@ -412,6 +545,28 @@ I'm adding a new line, is it okay?
 
             glPopMatrix();
         }
+        // else if(currentMode == PAUSE) {
+        //     glPushMatrix();
+
+        //     // glTranslatef(90, 0, 0);
+
+
+        //     // glScalef(0.3, 4.0, 1.0);
+        //     // writeText("Hello", font, CENTER);
+        //     glColor4f(0.2, 1.0, 0.0, 1.0);
+        //     drawString(50, 0, 50, (char*)"Hello");
+        //     // glScalef(0.2, 0.2, 0.0);
+
+        //     glColor4f(0.2, 0.2, 0.2, 1.0);
+        //     glBegin(GL_QUADS);
+        //     glVertex2f(-100.0, -100.0);
+        //     glVertex2f(-100.0, 100.0);
+        //     glVertex2f(100.0, 100.0);
+        //     glVertex2f(100.0, -100.0);
+        //     glEnd();
+
+        //     glPopMatrix();
+        // }
 
 // Making sure we can render 3d again
 

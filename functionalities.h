@@ -105,7 +105,7 @@ extern bool scoredGoal;
 
 extern int goalCount, totalTries;
 
-void drawBitmapText(const char *string,float x,float y);
+// void drawBitmapText(const char *string,float x,float y);
 
 extern int mouseX, mouseY;
 
