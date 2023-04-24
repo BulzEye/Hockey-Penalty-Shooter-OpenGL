@@ -55,6 +55,8 @@ void initialiseEverythingCallback(int _);
 
 
 void drawGoalPost();
+void draw_disk();
+void draw_cylinder();
 
 void cameraPosition(axes point, double distance, double xAngle, double zAngle);
 

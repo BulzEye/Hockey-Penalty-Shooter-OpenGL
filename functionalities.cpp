@@ -233,6 +233,84 @@ void drawGoalPost() {
 
 }
 
+void draw_disk()//creates seating for stadium as well as field
+{
+	GLUquadricObj *myDisk;
+	myDisk = gluNewQuadric();
+	gluQuadricDrawStyle(myDisk, GLU_FILL);
+	glPushMatrix();
+	// glTranslatef(0.0f,3.0f,0.0f);
+	// glTranslatef(0.0f,0.0f,0.0f);
+	// glTranslatef(0.0f,5.0f,0.0f);
+	glRotatef(180.0f, 1.0f, 0.0f, 0.0f);
+	glRotatef(45.0f, 0.0f, 0.0f, 1.0f);
+	glColor3f(0.2f, 0.2f, 0.2f);
+	glPushMatrix();
+	glTranslatef(0.0f,0.0f,-6.0f);
+	gluDisk(myDisk, 33 ,34, 4, 1);
+	glPopMatrix();
+	gluDisk(myDisk, 33 ,34, 4, 1);
+	glColor3f(0.3f, 0.3f, 0.3f);
+	glPushMatrix();
+	glTranslatef(0.0f,0.0f,-5.0f);
+	gluDisk(myDisk, 32 ,33, 4, 1);
+	glPopMatrix();
+	gluDisk(myDisk, 32 ,33, 4, 1);
+	glColor3f(0.4f, 0.4f, 0.4f);
+	glPushMatrix();
+	glTranslatef(0.0f,0.0f,-4.0f);
+	gluDisk(myDisk, 31 ,32, 4, 1);
+	glPopMatrix();
+	gluDisk(myDisk, 31 ,32, 4, 1);
+	glColor3f(0.5f, 0.5f, 0.5f);
+	glPushMatrix();
+	glTranslatef(0.0f,0.0f,-3.0f);
+	gluDisk(myDisk, 30 ,31, 4, 1);
+	glPopMatrix();
+	gluDisk(myDisk, 30 ,31, 4, 1);
+	glColor3f(0.6f, 0.6f, 0.6f);
+	glPushMatrix();
+	glTranslatef(0.0f,0.0f,-2.0f);
+	gluDisk(myDisk, 28.3, 30, 4, 1);
+	glPopMatrix();
+	// glColor3f(0.1f, 1.0f, 0.1f);
+	// gluDisk(myDisk, 0 ,8, 6, 1);//field
+	// glColor3f(0.2f, 0.2f, 0.2f);
+  	// ground.draw();
+	gluDeleteQuadric(myDisk);
+	glPopMatrix();
+
+}
+
+void draw_cylinder()//creates stadium
+{
+	GLUquadricObj *myCylinder;
+	myCylinder = gluNewQuadric();
+	gluQuadricDrawStyle(myCylinder, GLU_FILL);
+	glPushMatrix();
+	// glTranslatef(0.0f,3.0f,0.0f);
+	// glTranslatef(0.0f,0.0f,0.0f);
+	// glTranslatef(0.0f,5.0f, 0.0f);
+	glRotatef(180.0f, 1.0f, 0.0f, 0.0f);
+	glRotatef(180.0f, 0.0f, 1.0f, 0.0f);
+	glRotatef(45.0f, 0.0f, 0.0f, 1.0f);
+	glColor3f(0.2f, 0.2f, 0.2f);
+	gluCylinder(myCylinder, 34, 34, 7, 4, 1);
+	glColor3f(0.3f, 0.3f, 0.3f);
+	gluCylinder(myCylinder, 33, 33, 6, 4, 1);
+	glColor3f(0.4f, 0.4f, 0.4f);
+	gluCylinder(myCylinder, 32, 32, 5, 4, 1);
+	glColor3f(0.5f, 0.5f, 0.5f);
+	gluCylinder(myCylinder, 31, 31, 4, 4, 1);
+	glColor3f(0.6f, 0.6f, 0.6f);
+	gluCylinder(myCylinder, 30, 30, 3, 4, 1);
+    glColor3f(0.7f, 0.7f, 0.7f);
+    gluCylinder(myCylinder, 28.3, 28.3, 2, 4, 1);
+	gluDeleteQuadric(myCylinder);
+	glPopMatrix();
+
+}
+
 
 void cameraPosition(axes point, double distance, double zAngle, double xAngle) {
     gluLookAt(point.x + distance * (cos(DEG2GRAD(zAngle)) * cos(DEG2GRAD(xAngle))),
