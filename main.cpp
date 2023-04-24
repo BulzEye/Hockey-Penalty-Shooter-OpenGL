@@ -705,7 +705,7 @@ int sgn(T val) {
 void handlePassiveMouse(int x, int y) {
 //    if (currentMode == ADJUSTING) {
     if (currentMode != HELP && currentMode != PAUSE) {
-        sphereCamera.xAngle = -90 + (x - WIDTH / 2) * 270 / WIDTH;
+        sphereCamera.xAngle = -90 + (x - WIDTH / 2) * 360 / WIDTH;
         sphereCamera.zAngle = 45 + -1 * (y) * 30 / HEIGHT;
     }
 }
