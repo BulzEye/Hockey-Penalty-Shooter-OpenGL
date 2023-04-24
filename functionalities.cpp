@@ -509,8 +509,8 @@ PAUSE MENU
 
 
 Press H for showing instructions
+Press F to enter or exit full screen mode
 Press Esc to return
-
 
 
 

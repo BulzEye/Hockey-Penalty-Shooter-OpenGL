@@ -17,6 +17,7 @@ vector<float> currentTextColor = {1, 1, 1, 1};
 
 bool isDay;
 bool isPause = false;
+bool isFullScreen = false;
 
 void showScore();
 
@@ -216,6 +217,13 @@ void draw() {
     if (firstTime) {
         glutWarpPointer(WIDTH / 2, HEIGHT);
         firstTime = false;
+    }
+
+    if(currentMode == HELP || currentMode == PAUSE) {
+        glutSetCursor(GLUT_CURSOR_LEFT_ARROW);
+    }
+    else {
+        glutSetCursor(GLUT_CURSOR_NONE);
     }
 
     // LIGHT0: located behind camera, directed slantly towards the ball
@@ -434,6 +442,9 @@ mode prevMode = NONE;
 
 void handleKeypress(unsigned char key, //The key that was pressed
                     int x, int y) {    //The current mouse coordinates
+    if(key == 'f') {
+        isFullScreen = !isFullScreen;
+    }
     if (currentMode != HELP && currentMode != PAUSE) {
         switch (key) {
             case '+':
@@ -472,18 +483,21 @@ void handleKeypress(unsigned char key, //The key that was pressed
                 }
                 break;
 
-            case 'z':
-                cout << "Detected!" << endl;
-                if(currentMode == PAUSE) {
-                    cameraPos = tempCameraPos;
-                    sphereCamera = tempSphereCamera;
-                    currentMode = ADJUSTING;
-                }
-                else {
-                    tempCameraPos = cameraPos;
-                    tempSphereCamera = sphereCamera;
-                    currentMode = PAUSE;
-                }
+            // case 'z':
+            //     cout << "Detected!" << endl;
+            //     if(currentMode == PAUSE) {
+            //         cameraPos = tempCameraPos;
+            //         sphereCamera = tempSphereCamera;
+            //         currentMode = ADJUSTING;
+            //     }
+            //     else {
+            //         tempCameraPos = cameraPos;
+            //         tempSphereCamera = sphereCamera;
+            //         currentMode = PAUSE;
+            //     }
+            // case 'f':
+            //     isFullScreen = !isFullScreen;
+            //     break;
         }
     } else {
         if (key == 27) {
@@ -629,6 +643,12 @@ void idle() {
         }
         if (currentMode == POWERING) {
         }
+    }
+    if(isFullScreen) {
+        glutFullScreen();
+    }
+    else {
+        glutReshapeWindow(WIDTH, HEIGHT);
     }
     glutPostRedisplay();
 }
