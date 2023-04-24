@@ -182,6 +182,9 @@ void initialiseEverything() {
     sphereCamera.distance = 5.0;
     sphereCamera.distance = 10;
     tempSphereCamera = sphereCamera;
+    sphereCamera.xAngle = -90.0f;
+    sphereCamera.zAngle = 35.0f;
+    sphereCamera.distance = 13.0;
     for (int i = 0; i < 3; ++i) {
         sphere.positionCurrent[i] = sphere.velocityCurrent[i] = 0;
     }
@@ -374,15 +377,81 @@ void drawString(float x, float y, float z, char *string) {
 
 void drawHUD() {
     glDisable(GL_LIGHTING);
-    if (currentMode == HELP) {
+//     if (currentMode == HELP) {
 
-        const char *instructions = R"INSTRUCT(
+//         const char *instructions = R"INSTRUCT(
+// INSTRUCTIONS
+// You can use the mouse to look around.
+// Use the +/- keys for zooming in/out.
+
+// AIMING
+// Press the Enter/Return key to enter Aiming Mode.
+// Direct the arrow with the arrow keys to set up the
+// direction of the shot.
+
+// POWERING
+// Press and hold Space after aiming to power up.
+// Release Space to select the specified power level.
+// Press the ESC key (when holding down SPACE) to cancel
+// POWERING mode.
+
+// Press ESC key to return to the previous mode or to exit the
+// instructions.
+// Press Q at any time to exit the game.
+
+// I'm adding a new line, is it okay?
+// )INSTRUCT";
+
+//         glPushMatrix();
+//         glRotatef(90 + sphereCamera.xAngle, 0, 0, 1);
+//         glRotatef(-sphereCamera.zAngle, 1, 0, 0);
+
+//         glTranslatef(0, -BALL_RADIUS, -BALL_RADIUS);
+
+//         glColor4f(0, 0, 0, 0.8);
+//         glBegin(GL_QUADS);
+//         glVertex3f(-10, 0, -5);
+//         glVertex3f(10, 0, -5);
+//         glVertex3f(10, 0, 6);
+//         glVertex3f(-10, 0, 6);
+//         glEnd();
+//         glScalef(0.5, 0.5, 0.5);
+//         glTranslatef(0, -0.001, 9.5);
+
+//         currentTextColor = {1.0, 1.0, 1.0, 1.0};
+//         writeMultiLineText(instructions, font, CENTER);
+//         glPopMatrix();
+//     } 
+    if(currentMode == PAUSE || currentMode == HELP) {
+        const char *instructions = 
+        // if mode is PAUSE then load appropriate instructions string
+        ((currentMode == PAUSE) ? R"INSTRUCT(
+PAUSE MENU
+
+
+
+Press H for showing instructions
+Press Esc to return
+
+
+
+
+
+Press Q to quit
+)INSTRUCT" 
+
+: //----------------------- OR if mode is HELP -----------------------
+
+ R"INSTRUCT(
 INSTRUCTIONS
 You can use the mouse to look around.
 Use the +/- keys for zooming in/out.
+Use I/K to move the camera towards / away from the goalpost.
+Use J/L to move the camera to the left / right of the goalpost.
+Use N to toggle Night Mode.
 
 AIMING
-Press the Enter/Return key to enter Aiming Mode.
+Press the Enter/Return key to enter or exit Aiming Mode.
 Direct the arrow with the arrow keys to set up the
 direction of the shot.
 
@@ -392,48 +461,9 @@ Release Space to select the specified power level.
 Press the ESC key (when holding down SPACE) to cancel
 POWERING mode.
 
-Press ESC key to return to the previous mode or to exit the
-instructions.
-Press Q at any time to exit the game.
+Press ESC key to continue.
+)INSTRUCT");
 
-I'm adding a new line, is it okay?
-)INSTRUCT";
-
-        glPushMatrix();
-        glRotatef(90 + sphereCamera.xAngle, 0, 0, 1);
-        glRotatef(-sphereCamera.zAngle, 1, 0, 0);
-
-        glTranslatef(0, -BALL_RADIUS, -BALL_RADIUS);
-
-        glColor4f(0, 0, 0, 0.8);
-        glBegin(GL_QUADS);
-        glVertex3f(-10, 0, -5);
-        glVertex3f(10, 0, -5);
-        glVertex3f(10, 0, 6);
-        glVertex3f(-10, 0, 6);
-        glEnd();
-        glScalef(0.5, 0.5, 0.5);
-        glTranslatef(0, -0.001, 9.5);
-
-        currentTextColor = {1.0, 1.0, 1.0, 1.0};
-        writeMultiLineText(instructions, font, CENTER);
-        glPopMatrix();
-    } 
-    else if(currentMode == PAUSE) {
-        const char *instructions = R"INSTRUCT(
-PAUSE MENU
-
-
-
-Press h for showing instructions
-Press Esc to return
-
-
-
-
-
-Press q to quit
-)INSTRUCT";
         cameraPos.x = cameraPos.y = cameraPos.z = 0.0;
         sphereCamera.distance = 13.0;
         sphereCamera.zAngle = 35.0;
@@ -446,8 +476,11 @@ Press q to quit
         glPushMatrix();
         glRotatef(0, 0, 0, 1);
         glRotatef(-35.0, 1, 0, 0);
-
-        glTranslatef(0, -BALL_RADIUS-2, -BALL_RADIUS-1);
+        
+        if(currentMode == PAUSE)
+            glTranslatef(0, -BALL_RADIUS-2, -BALL_RADIUS-1);
+        else if(currentMode == HELP)
+            glTranslatef(0, -BALL_RADIUS-2, -BALL_RADIUS);
 
         glColor4f(0, 0, 0, 0.9);
         glBegin(GL_QUADS);
@@ -460,7 +493,10 @@ Press q to quit
         glVertex3f(15, 0, 11);
         glVertex3f(-15, 0, 11);
         glEnd();
-        glScalef(0.6, 0.6, 0.6);
+        if(currentMode == PAUSE)
+            glScalef(0.6, 0.6, 0.6);
+        else 
+            glScalef(0.5, 0.5, 0.5);
         glTranslatef(0, -0.001, 9.5);
 
         currentTextColor = {1.0, 1.0, 1.0, 1.0};

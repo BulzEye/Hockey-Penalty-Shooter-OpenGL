@@ -1147,7 +1147,7 @@ void incrementPowerMeter(int _) {
     }
 }
 
-mode prevMode = ADJUSTING;
+mode prevMode = NONE;
 
 void handleKeypress(unsigned char key, //The key that was pressed
                     int x, int y) {    //The current mouse coordinates
@@ -1204,10 +1204,18 @@ void handleKeypress(unsigned char key, //The key that was pressed
         }
     } else {
         if (key == 27) {
-            currentMode = prevMode;
-            cameraPos = tempCameraPos;
-            sphereCamera = tempSphereCamera;
-            prevMode = NONE;
+            if(currentMode == HELP) {
+                if(prevMode == NONE) 
+                    prevMode = currentMode = ADJUSTING;
+                else
+                    currentMode = PAUSE;
+            } 
+            else 
+                currentMode = prevMode;
+            if(currentMode != PAUSE) {
+                cameraPos = tempCameraPos;
+                sphereCamera = tempSphereCamera;
+            }
             downKeys[key] = true;
         }
     }
@@ -1227,8 +1235,8 @@ void handleKeypress(unsigned char key, //The key that was pressed
                     currentMode = PAUSE;
                 }
                 break;
-            case EXIT_KEY: // Currently, 'q'
-                exit(0); //Exit the program
+            // case EXIT_KEY: // Currently, 'q'
+            //     exit(0); //Exit the program
         }
     }
     if (currentMode == AIMING) {
@@ -1281,14 +1289,15 @@ void handleKeypress(unsigned char key, //The key that was pressed
             //     lookDist[2] -= 0.2;
             //     break;
             
-            // case 27: 
-            //     prevMode = NONE; 
-            //     break;
+            case 'h': 
+                currentMode = HELP; 
+                break;
 
             case EXIT_KEY:
                 exit(0);
         }
     }
+    if(currentMode==POWERING) downKeys[key] = true;
 }
 
 void idle() {
