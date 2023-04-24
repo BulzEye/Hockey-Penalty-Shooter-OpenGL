@@ -164,6 +164,8 @@ axes tempCameraPos;
 // The pause menu changes the cameraPos coordinates. 
 // To ensure we go back to where we were present initially, we use tempCameraPos
 
+extern camera tempSphereCamera;
+
 void drawHockeyStick(float innerRadius, float outerRadius, int numSides) {
     float x , y;
     glBegin(GL_QUAD_STRIP);
@@ -1145,10 +1147,11 @@ void incrementPowerMeter(int _) {
     }
 }
 
+mode prevMode = ADJUSTING;
 
 void handleKeypress(unsigned char key, //The key that was pressed
                     int x, int y) {    //The current mouse coordinates
-    if (currentMode != HELP) {
+    if (currentMode != HELP && currentMode != PAUSE) {
         switch (key) {
             case '+':
                 sphereCamera.distance -= 0.1f;
@@ -1188,21 +1191,43 @@ void handleKeypress(unsigned char key, //The key that was pressed
 
             case 'z':
                 cout << "Detected!" << endl;
-                if(currentMode == PAUSE) currentMode = ADJUSTING;
-                else currentMode = PAUSE;
+                if(currentMode == PAUSE) {
+                    cameraPos = tempCameraPos;
+                    sphereCamera = tempSphereCamera;
+                    currentMode = ADJUSTING;
+                }
+                else {
+                    tempCameraPos = cameraPos;
+                    tempSphereCamera = sphereCamera;
+                    currentMode = PAUSE;
+                }
         }
     } else {
         if (key == 27) {
-            currentMode = ADJUSTING;
+            currentMode = prevMode;
+            cameraPos = tempCameraPos;
+            sphereCamera = tempSphereCamera;
+            prevMode = NONE;
+            downKeys[key] = true;
         }
     }
-    downKeys[key] = true;
+    if(key!=27 && key!='\r')
+        downKeys[key] = true;
     if (currentMode == ADJUSTING) {
         switch (key) {
             case '\r':
                 currentMode = AIMING;
+                downKeys[key] = true;
                 break;
-            case EXIT_KEY: //Escape key
+            case 27:
+                if(!downKeys[key]) {
+                    prevMode = currentMode;
+                    tempCameraPos = cameraPos;
+                    tempSphereCamera = sphereCamera;
+                    currentMode = PAUSE;
+                }
+                break;
+            case EXIT_KEY: // Currently, 'q'
                 exit(0); //Exit the program
         }
     }
@@ -1213,7 +1238,16 @@ void handleKeypress(unsigned char key, //The key that was pressed
                 glutTimerFunc(1000 * 1 / 60.0, incrementPowerMeter, 0);
                 break;
             case 27: //Escape key
-                currentMode = ADJUSTING;
+                if(!downKeys[key]) {
+                    prevMode = currentMode;
+                    tempCameraPos = cameraPos;
+                    tempSphereCamera = sphereCamera;
+                    currentMode = PAUSE;
+                }
+                break;
+
+            case '\r':
+                if(!downKeys[key]) currentMode = ADJUSTING;
         }
     }
     if(key == 'n') {
@@ -1235,17 +1269,21 @@ void handleKeypress(unsigned char key, //The key that was pressed
     }
 
     if(currentMode==PAUSE) {
-        printf("%f, %f, %f\n", cameraPos.x, cameraPos.y, cameraPos.z);
-        printf("%f, %f, %f\n", sphereCamera.distance, sphereCamera.zAngle, sphereCamera.xAngle);
+        // printf("%f, %f, %f\n", cameraPos.x, cameraPos.y, cameraPos.z);
+        // printf("%f, %f, %f\n", sphereCamera.distance, sphereCamera.zAngle, sphereCamera.xAngle);
         switch(key) {
-            case '+':
-                lookDist[2] += 0.2;
-                printf("%f %f %f", lookDist[0], lookDist[1], lookDist[2]);
-                break;
+            // case '+':
+            //     lookDist[2] += 0.2;
+            //     printf("%f %f %f", lookDist[0], lookDist[1], lookDist[2]);
+            //     break;
 
-            case '-':
-                lookDist[2] -= 0.2;
-                break;
+            // case '-':
+            //     lookDist[2] -= 0.2;
+            //     break;
+            
+            // case 27: 
+            //     prevMode = NONE; 
+            //     break;
 
             case EXIT_KEY:
                 exit(0);
@@ -1430,6 +1468,7 @@ void myInit(void) {
 
 
     cameraPos[0] = cameraPos[1] = cameraPos[2] = 0.0;
+    tempCameraPos = cameraPos;
 
     glEnable(GL_LIGHT0); //Enable light #0
     glEnable(GL_LIGHT1); //Enable light #1

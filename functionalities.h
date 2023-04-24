@@ -66,6 +66,7 @@ struct camera {
 };
 
 extern camera sphereCamera;
+extern camera tempSphereCamera;
 
 void myShear();
 

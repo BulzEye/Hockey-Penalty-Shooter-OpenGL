@@ -181,6 +181,7 @@ void initialiseEverything() {
     sphereCamera.zAngle = 15.0f;
     sphereCamera.distance = 5.0;
     sphereCamera.distance = 10;
+    tempSphereCamera = sphereCamera;
     for (int i = 0; i < 3; ++i) {
         sphere.positionCurrent[i] = sphere.velocityCurrent[i] = 0;
     }
