@@ -13,7 +13,7 @@ void FlatSurface::draw(bool isDay) {
     start2DTexture(groundTexture, isDay);
 
     // GLfloat mat_amb[] = { 0.2, 0.2, 0.2, 1.0 };
-    // GLfloat mat_dif[] = { 0.7, 0.7, 0.7, 1.0 };
+    // GLfloat mat_dif[] = { 10, 10, 10, 1.0 };
     // GLfloat mat_spc[] = { 1.0, 1.0, 1.0, 1.0 };
     // GLfloat mat_shin[] = { 50.0 };
     // glMaterialfv(GL_FRONT, GL_AMBIENT, mat_amb);

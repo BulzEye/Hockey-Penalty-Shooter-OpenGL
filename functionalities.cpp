@@ -868,12 +868,28 @@ void start2DTexture(GLuint texture, bool lightingDisabled) {
     // }
 
 
+
     glDepthMask(GL_FALSE);
     glPushMatrix();
+    // GLfloat mat_amb[] = { 0.7, 0.7, 0.7, 1.0 };
+    // GLfloat mat_dif[] = { 1.0, 1.0, 1.0, 1.0 };
+    // // GLfloat mat_spc[] = { 1.0, 1.0, 1.0, 1.0 };
+    // // GLfloat mat_shin[] = { 50.0 };
+    // glMaterialfv(GL_FRONT, GL_AMBIENT, mat_amb);
+    // glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_dif);
+    // // glMaterialfv(GL_FRONT, GL_SPECULAR, mat_spc);
+    // // glMaterialfv(GL_FRONT, GL_SHININESS, mat_shin);
+
+    // if(!isDay) {
+    //     glEnable(GL_COLOR_MATERIAL);
+    // }
     glEnable(GL_TEXTURE_2D);
     glBindTexture(GL_TEXTURE_2D, texture);
     glTexEnvf(GL_TEXTURE_2D, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+    // glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
     glEnable(GL_BLEND);
+    // glTexGeni(GL_S, GL_TEXTURE_GEN_MODE, GL_OBJECT_LINEAR); 
+    // glTexGeni(GL_T, GL_TEXTURE_GEN_MODE, GL_OBJECT_LINEAR);
 //    glEnable(GL_TEXTURE_GEN_S); //enable texture coordinate generation
 //    glEnable(GL_TEXTURE_GEN_T);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
