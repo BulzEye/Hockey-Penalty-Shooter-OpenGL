@@ -241,7 +241,7 @@ void draw() {
     glLightfv(GL_LIGHT2, GL_DIFFUSE, lightColor2);
     glLightfv(GL_LIGHT2, GL_POSITION, lightPos2);
 
-    // LIGHT3: intended to be spotlight (in night mode) from left front corner
+    // LIGHT3-6: intended to be spotlight (in night mode) from left front corner
     //         parallel ray light source
 
     // cout << ground.corners[0][0] << endl;
@@ -254,6 +254,16 @@ void draw() {
     GLfloat spotlightr_color[] = {1.0f, 1.0f, 1.0f, 0.7f}; //Color (0.5, 0.5, 0.5)
     glLightfv(GL_LIGHT4, GL_POSITION, spotlightr_pos);
     glLightfv(GL_LIGHT4, GL_DIFFUSE, spotlightr_color);
+
+    GLfloat spotlightbr_pos[] = {(float)ground.corners[3][0], (float)ground.corners[3][1], (float)ground.corners[3][2]+30, 1.0f};
+    GLfloat spotlightbr_color[] = {1.0f, 1.0f, 1.0f, 0.7f}; //Color (0.5, 0.5, 0.5)
+    glLightfv(GL_LIGHT5, GL_POSITION, spotlightbr_pos);
+    glLightfv(GL_LIGHT5, GL_DIFFUSE, spotlightbr_color);
+
+    GLfloat spotlightbl_pos[] = {(float)ground.corners[0][0], (float)ground.corners[0][1], (float)ground.corners[0][2]+30, 1.0f};
+    GLfloat spotlightbl_color[] = {1.0f, 1.0f, 1.0f, 0.7f}; //Color (0.5, 0.5, 0.5)
+    glLightfv(GL_LIGHT6, GL_POSITION, spotlightbl_pos);
+    glLightfv(GL_LIGHT6, GL_DIFFUSE, spotlightbl_color);
 
     if(isDay) // if it is day then set background color to blue
         glClearColor(137 / 255.0, 206 / 255.0, 255 / 255.0, 0);
@@ -539,6 +549,8 @@ void handleKeypress(unsigned char key, //The key that was pressed
             glEnable(GL_LIGHT2); //Enable light #2
             glDisable(GL_LIGHT3); //Disable light #3
             glDisable(GL_LIGHT4); //Disable light #4
+            glDisable(GL_LIGHT5); //Disable light #5
+            glDisable(GL_LIGHT6); //Disable light #6
         }
         else {
             glDisable(GL_LIGHT0); //Disable light #0
@@ -546,6 +558,8 @@ void handleKeypress(unsigned char key, //The key that was pressed
             glDisable(GL_LIGHT2); //Disable light #2
             glEnable(GL_LIGHT3); //Enable light #3
             glEnable(GL_LIGHT4); //Enable light #4
+            glEnable(GL_LIGHT5); //Enable light #5
+            glEnable(GL_LIGHT6); //Enable light #6
         }
     }
 
@@ -757,6 +771,8 @@ void myInit(void) {
     glEnable(GL_LIGHT2); //Enable light #2
     glDisable(GL_LIGHT3); //Disable light #3
     glDisable(GL_LIGHT4); //Disable light #4
+    glDisable(GL_LIGHT5); //Disable light #5
+    glDisable(GL_LIGHT6); //Disable light #6
     glEnable(GL_NORMALIZE); //Automatically normalize normals
     glShadeModel(GL_SMOOTH);
     backgroundMusicPlayer(0);
